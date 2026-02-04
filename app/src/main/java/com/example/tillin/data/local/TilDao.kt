@@ -17,8 +17,9 @@ interface TilDao {
     @Query("SELECT * FROM tils WHERE id = :id")
     suspend fun getTilById(id: Long): TilEntity?
 
+    // 목록용 (최신순)
     @Query("SELECT * FROM tils WHERE createdAt >= :startTime AND createdAt < :endTime ORDER BY createdAt DESC")
-    fun getTilsByDateRange(startTime: Long, endTime: Long): Flow<List<TilEntity>>
+    fun getTilsForList(startTime: Long, endTime: Long): Flow<List<TilEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTil(til: TilEntity): Long
@@ -29,6 +30,7 @@ interface TilDao {
     @Delete
     suspend fun deleteTil(til: TilEntity)
 
-    @Query("SELECT * FROM tils WHERE createdAt >= :startTime ORDER BY createdAt ASC")
-    fun getTilsForMonth(startTime: Long): Flow<List<TilEntity>>
+    // 통계용 (과거순)
+    @Query("SELECT * FROM tils WHERE createdAt >= :startTime AND createdAt < :endTime ORDER BY createdAt ASC")
+    fun getTilsForStats(startTime: Long, endTime: Long): Flow<List<TilEntity>>
 }
