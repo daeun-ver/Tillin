@@ -6,14 +6,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.tillin.ui.screen.home.HomeScreen
+import com.example.tillin.ui.screen.stats.month.MonthTab
+import com.example.tillin.ui.screen.stats.week.WeekTab
 import com.example.tillin.ui.screen.til.TilCreateScreen
+import com.example.tillin.ui.screen.til.TilDetailScreen
 import com.example.tillin.ui.screen.til.TilListScreen
 
 @Composable
 fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
-        startDestination = "Home",
+        startDestination = "home",
         modifier = modifier
     ) {
         composable("splash") {
@@ -22,11 +25,12 @@ fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier)
         composable("home") {
             HomeScreen(navController)
         }
-        composable("list") {
-            TilListScreen(onCreate = { navController.navigate("create") })
-        }
+
         composable("create") {
             TilCreateScreen(onBack = { navController.popBackStack() })
+        }
+        composable("detail") {
+            TilDetailScreen()
         }
     }
 }

@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun TilDetailScreen(navController: NavHostController) {
+fun TilDetailScreen() {
     Scaffold() { padding ->
         Column(modifier = Modifier.fillMaxSize()
             .padding(padding)) {
