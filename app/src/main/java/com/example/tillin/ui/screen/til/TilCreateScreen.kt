@@ -10,7 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun TilCreateScreen(navController: NavHostController) {
+fun TilCreateScreen(
+
+    onBack: () -> Unit
+) {
     Scaffold() { padding ->
         Column(modifier = Modifier.fillMaxSize()
             .padding(padding)) {
