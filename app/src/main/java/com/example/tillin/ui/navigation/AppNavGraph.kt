@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.tillin.ui.screen.home.HomeScreen
 
 @Composable
-fun NavGraph (navController: NavHostController, modifier: Modifier) {
+fun AppNavGraph (navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost (
         navController = navController,
         startDestination = "Home",
@@ -18,7 +18,7 @@ fun NavGraph (navController: NavHostController, modifier: Modifier) {
 
         }
         composable("Home") {
-            HomeScreen()
+            HomeScreen(navController)
         }
     }
 }
