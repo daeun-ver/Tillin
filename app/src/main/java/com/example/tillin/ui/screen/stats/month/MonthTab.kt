@@ -7,10 +7,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 
 @Composable
-fun MonthScreen(navController: NavHostController) {
+fun MonthTab() {
     Scaffold() { padding ->
         Column(modifier = Modifier.fillMaxSize()
             .padding(padding)) {
