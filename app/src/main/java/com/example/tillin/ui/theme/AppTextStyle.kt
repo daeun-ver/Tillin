@@ -23,12 +23,12 @@ object AppTextStyle {
     )
 
     //바디 텍스트
-    val BodyComment = TextStyle (
+    val Body = TextStyle (
         fontFamily = Pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp
     )
-    val Body = TextStyle (
+    val BodyTitle = TextStyle (
         fontFamily = Pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
