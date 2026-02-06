@@ -1,5 +1,7 @@
 package com.example.tillin.ui.screen.til
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,16 +18,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
+import com.example.tillin.ui.theme.AppTextStyle
+import com.example.tillin.ui.theme.Dimens
+import com.example.tillin.ui.theme.PrimaryBackground
 import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
 
 @Composable
-fun TilListScreen(onCreate:() -> Unit) {
+fun TilListScreen(onCreate: () -> Unit) {
     val dummy = listOf(
-        TilEntity(id = 1234, title = "Kotlin 공부", learned = "코틀린 문법을 공부 했다", emotion = "😊")
+        TilEntity(id = 1234, title = "Kotlin 공부", learned = "코틀린 문법을 공부 했다", emotion = "😊") ,
+        TilEntity(id = 5678, title = "Room DB 정리", learned = "Room DB를 정리했다.", emotion = "😊")
+
     )
     Scaffold(
         modifier = Modifier,
+        containerColor = PrimaryBackground,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onCreate() },
@@ -42,14 +50,38 @@ fun TilListScreen(onCreate:() -> Unit) {
             }
         }
     ) { padding ->
-        LazyColumn(modifier = Modifier.fillMaxSize()
-            .padding(padding)) {
-            items(dummy) { til->
-                Text("TilListScreen")
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(Dimens.XLarge)
+        ) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(Dimens.Tiny)
+                )
+                Text(
+                    text = "2026.02.06",
+                    style = AppTextStyle.BodySmallGray
+
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(Dimens.Nano)
+                )
+            }
+            items(dummy) { til ->
                 TilCard(
                     emotion = til.emotion,
                     title = til.title
                 ) { }
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(Dimens.Nano)
+                )
             }
 
         }

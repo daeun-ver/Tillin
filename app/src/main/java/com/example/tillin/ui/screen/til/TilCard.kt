@@ -25,7 +25,6 @@ fun TilCard(
     Card(
         modifier = Modifier
             .fillMaxSize()
-            .padding(Dimens.Large)
             .clickable { onClick() },
         shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
         colors = CardDefaults.cardColors(White),
@@ -41,12 +40,12 @@ fun TilCard(
             Text(
                 text = "$emotion",
                 style = AppTextStyle.TitleSmall
-                )
-            Box(modifier = Modifier.padding(Dimens.Tiny)) {  }
+            )
+            Box(modifier = Modifier.padding(Dimens.Nano)) { }
             Text(
                 text = title,
                 style = AppTextStyle.TitleSmall
-                )
+            )
         }
     }
 }

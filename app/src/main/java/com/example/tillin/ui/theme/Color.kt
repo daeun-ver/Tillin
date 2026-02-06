@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 //메인 컬러
 val PrimaryColor = Color(0xFFFF999B)
-val rimaryBackground = Color(0xFFFFF4EC)
+val PrimaryBackground = Color(0xFFFFF4EC)
 
 //서브 컬러
 val PrimaryHalfColor = Color(0xFFFDC3C4)
@@ -13,6 +13,7 @@ val PrimaryTenthColor = Color(0xFFFFE4E4)
 //공통 색상
 val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
+val DarkGray = Color(0xFF969696)
 val Gray = Color(0xFFE7E7E7)
 val LightGray = Color(0xFFF5F5F5)
 val Purple80 = Color(0xFFD0BCFF)

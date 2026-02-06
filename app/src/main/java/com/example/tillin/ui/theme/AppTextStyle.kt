@@ -48,7 +48,7 @@ object AppTextStyle {
         fontFamily = Pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        color = Gray
+        color = DarkGray
     )
     val BodyThin = TextStyle (
         fontFamily = Pretendard,
