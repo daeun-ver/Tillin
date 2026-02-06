@@ -24,7 +24,15 @@ fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier)
         composable("splash") {
 
         }
-        composable("home") {
+        composable(
+            route = "home",
+            exitTransition = {
+                slideOutVertically(targetOffsetY = { it })
+            },
+            popEnterTransition = {
+                slideInVertically(initialOffsetY = { -it })
+            }
+        ) {
             HomeScreen(navController)
         }
 
@@ -33,7 +41,7 @@ fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier)
             enterTransition = {
                 slideInVertically(initialOffsetY = { it })
             },
-            exitTransition = {
+            popExitTransition = {
                 slideOutVertically(targetOffsetY = { it })
             }
         ) {
