@@ -23,14 +23,18 @@ import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.PrimaryBackground
 import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @Composable
 fun TilListScreen(onCreate: () -> Unit) {
     val dummy = listOf(
-        TilEntity(id = 1234, title = "Kotlin 공부", learned = "코틀린 문법을 공부 했다", emotion = "😊") ,
-        TilEntity(id = 5678, title = "Room DB 정리", learned = "Room DB를 정리했다.", emotion = "😊")
-
+        TilEntity(id = 1234, title = "Kotlin 공부", learned = "코틀린 문법을 공부 했다", emotion = "😊", createdAt = 1770331200000),
+        TilEntity(id = 5678, title = "Room DB 정리", learned = "Room DB를 정리했다.", emotion = "😊", createdAt = 1770331100000),
+        TilEntity(id = 1434, title = "과거 기록", learned = "어제 배운 것", emotion = "🤔", createdAt = 1770244800000)
     )
+    val timeFormat = SimpleDateFormat("yyyy-MM-dd")
+    val tilGroup = dummy.groupBy { timeFormat.format(Date(it.createdAt)) }
     Scaffold(
         modifier = Modifier,
         containerColor = PrimaryBackground,
@@ -55,34 +59,37 @@ fun TilListScreen(onCreate: () -> Unit) {
                 .fillMaxSize()
                 .padding(Dimens.XLarge)
         ) {
-            item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(Dimens.Tiny)
-                )
-                Text(
-                    text = "2026.02.06",
-                    style = AppTextStyle.BodySmallGray
+            tilGroup.forEach { (date, tils) ->
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(Dimens.Tiny)
+                    )
+                    Text(
+                        text = date,
+                        style = AppTextStyle.BodySmallGray
 
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(Dimens.Nano)
-                )
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(Dimens.Nano)
+                    )
+                }
+                items(tils) { til ->
+                    TilCard(
+                        emotion = til.emotion,
+                        title = til.title
+                    ) { }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(Dimens.Nano)
+                    )
+                }
             }
-            items(dummy) { til ->
-                TilCard(
-                    emotion = til.emotion,
-                    title = til.title
-                ) { }
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(Dimens.Nano)
-                )
-            }
+
 
         }
     }
