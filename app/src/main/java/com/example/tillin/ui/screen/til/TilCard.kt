@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.White
 
@@ -24,7 +25,7 @@ fun TilCard(
     Card(
         modifier = Modifier
             .fillMaxSize()
-            .padding(Dimens.Tiny)
+            .padding(Dimens.Large)
             .clickable { onClick() },
         shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
         colors = CardDefaults.cardColors(White),
@@ -32,10 +33,20 @@ fun TilCard(
             defaultElevation = 4.dp
         )
     ) {
-        Row {
-            Text("$emotion")
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(Dimens.XLarge)
+        ) {
+            Text(
+                text = "$emotion",
+                style = AppTextStyle.TitleSmall
+                )
             Box(modifier = Modifier.padding(Dimens.Tiny)) {  }
-            Text("$title")
+            Text(
+                text = title,
+                style = AppTextStyle.TitleSmall
+                )
         }
     }
 }
