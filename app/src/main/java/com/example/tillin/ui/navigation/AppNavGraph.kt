@@ -1,5 +1,7 @@
 package com.example.tillin.ui.navigation
 
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -26,7 +28,15 @@ fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier)
             HomeScreen(navController)
         }
 
-        composable("create") {
+        composable(
+            route = "create",
+            enterTransition = {
+                slideInVertically(initialOffsetY = { it })
+            },
+            exitTransition = {
+                slideOutVertically(targetOffsetY = { it })
+            }
+        ) {
             TilCreateScreen(onBack = { navController.popBackStack() })
         }
         composable("detail") {
