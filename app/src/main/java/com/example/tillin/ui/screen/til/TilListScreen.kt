@@ -1,6 +1,6 @@
 package com.example.tillin.ui.screen.til
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -61,7 +61,7 @@ fun TilListScreen(onCreate: () -> Unit) {
         ) {
             tilGroup.forEach { (date, tils) ->
                 item {
-                    Box(
+                    Spacer(
                         modifier = Modifier
                             .fillMaxHeight()
                             .padding(Dimens.Tiny)
@@ -71,7 +71,7 @@ fun TilListScreen(onCreate: () -> Unit) {
                         style = AppTextStyle.BodySmallGray
 
                     )
-                    Box(
+                    Spacer(
                         modifier = Modifier
                             .fillMaxHeight()
                             .padding(Dimens.Nano)
@@ -82,7 +82,7 @@ fun TilListScreen(onCreate: () -> Unit) {
                         emotion = til.emotion,
                         title = til.title
                     ) { }
-                    Box(
+                    Spacer(
                         modifier = Modifier
                             .fillMaxHeight()
                             .padding(Dimens.Nano)
