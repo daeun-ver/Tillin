@@ -1,8 +1,8 @@
 package com.example.tillin.ui.screen.til
 
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -62,9 +62,7 @@ fun TilListScreen(onCreate: () -> Unit) {
             tilGroup.forEach { (date, tils) ->
                 item {
                     Spacer(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(Dimens.Tiny)
+                        modifier = Modifier.height(Dimens.Tiny)
                     )
                     Text(
                         text = date,
@@ -72,9 +70,7 @@ fun TilListScreen(onCreate: () -> Unit) {
 
                     )
                     Spacer(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(Dimens.Nano)
+                        modifier = Modifier.height(Dimens.Nano)
                     )
                 }
                 items(tils) { til ->
@@ -83,9 +79,7 @@ fun TilListScreen(onCreate: () -> Unit) {
                         title = til.title
                     ) { }
                     Spacer(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(Dimens.Nano)
+                        modifier = Modifier.height(Dimens.Nano)
                     )
                 }
             }
