@@ -36,7 +36,10 @@ fun HomeScreen(navController: NavHostController) {
             )
 
             when (homeSelectedTab) {
-                HomeTab.Home -> TilListScreen(onCreate = { navController.navigate("create") })
+                HomeTab.Home -> TilListScreen(
+                    onCreate = { navController.navigate("create") },
+                    onDetail = { navController.navigate("detail")}
+                )
                 HomeTab.STATS -> StatsScreen()
             }
         }
