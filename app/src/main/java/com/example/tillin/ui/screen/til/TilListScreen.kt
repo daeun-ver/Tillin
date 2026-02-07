@@ -66,8 +66,8 @@ fun TilListScreen(onCreate: () -> Unit) {
 
                     Text(
                         text = date,
-                        style = AppTextStyle.BodySmallGray
-
+                        style = AppTextStyle.BodySmallGray,
+                        modifier = Modifier.padding(Dimens.Nano)
                     )
                     Spacer(
                         modifier = Modifier.height(Dimens.Tiny)
