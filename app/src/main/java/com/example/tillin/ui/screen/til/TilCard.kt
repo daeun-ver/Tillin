@@ -26,7 +26,7 @@ fun TilCard(
         modifier = Modifier
             .fillMaxSize()
             .clickable { onClick() },
-        shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
+        shape = RoundedCornerShape(Dimens.TILCornerRadius),
         colors = CardDefaults.cardColors(White),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
