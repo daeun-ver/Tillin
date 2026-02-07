@@ -59,18 +59,18 @@ fun TilListScreen(onCreate: () -> Unit) {
                 .fillMaxSize()
                 .padding(Dimens.XLarge)
         ) {
-            tilGroup.forEach { (date, tils) ->
+            tilGroup.toList().forEachIndexed { index, (date, tils) ->
                 item {
-                    Spacer(
-                        modifier = Modifier.height(Dimens.Tiny)
-                    )
+                    val topSpace = if (index == 0) Dimens.Nano else Dimens.XXLarge
+                    Spacer(modifier = Modifier.height(topSpace))
+
                     Text(
                         text = date,
                         style = AppTextStyle.BodySmallGray
 
                     )
                     Spacer(
-                        modifier = Modifier.height(Dimens.Nano)
+                        modifier = Modifier.height(Dimens.Tiny)
                     )
                 }
                 items(tils) { til ->
@@ -79,7 +79,7 @@ fun TilListScreen(onCreate: () -> Unit) {
                         title = til.title
                     ) { }
                     Spacer(
-                        modifier = Modifier.height(Dimens.Nano)
+                        modifier = Modifier.height(Dimens.Tiny)
                     )
                 }
             }
