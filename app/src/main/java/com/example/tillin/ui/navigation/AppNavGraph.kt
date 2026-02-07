@@ -45,7 +45,10 @@ fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier)
                 slideOutVertically(targetOffsetY = { it })
             }
         ) {
-            TilCreateScreen(onBack = { navController.popBackStack() })
+            TilCreateScreen(
+                onDone = { navController.popBackStack() },
+                onBack = { navController.popBackStack() }
+            )
         }
         composable("detail") {
             TilDetailScreen()
