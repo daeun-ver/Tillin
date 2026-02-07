@@ -8,11 +8,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.tillin.ui.screen.home.HomeScreen
-import com.example.tillin.ui.screen.stats.month.MonthTab
-import com.example.tillin.ui.screen.stats.week.WeekTab
 import com.example.tillin.ui.screen.til.TilCreateScreen
 import com.example.tillin.ui.screen.til.TilDetailScreen
-import com.example.tillin.ui.screen.til.TilListScreen
 
 @Composable
 fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -51,7 +48,9 @@ fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier)
             )
         }
         composable("detail") {
-            TilDetailScreen()
+            TilDetailScreen(
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }

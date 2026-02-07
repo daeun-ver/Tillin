@@ -27,7 +27,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 @Composable
-fun TilListScreen(onCreate: () -> Unit) {
+fun TilListScreen(
+    onCreate: () -> Unit,
+    onDetail: () -> Unit
+) {
     val dummy = listOf(
         TilEntity(id = 1234, title = "Kotlin 공부", learned = "코틀린 문법을 공부 했다", emotion = "😊", createdAt = 1770331200000),
         TilEntity(id = 5678, title = "Room DB 정리", learned = "Room DB를 정리했다.", emotion = "😊", createdAt = 1770331100000),
@@ -75,9 +78,10 @@ fun TilListScreen(onCreate: () -> Unit) {
                 }
                 items(tils) { til ->
                     TilCard(
+                        onClick = { onDetail() },
                         emotion = til.emotion,
                         title = til.title
-                    ) { }
+                    )
                     Spacer(
                         modifier = Modifier.height(Dimens.Tiny)
                     )
