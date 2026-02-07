@@ -1,11 +1,17 @@
 package com.example.tillin.ui.screen.til
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -29,13 +35,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.Gray
+import com.example.tillin.ui.theme.PrimaryBackground
 import com.example.tillin.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +55,7 @@ fun TilDetailScreen(
     editTil: TilEntity? = null
 ) {
     val scrollState = rememberScrollState()
+    var comment by remember { mutableStateOf(editTil?.comment.orEmpty()) }
     var title by remember { mutableStateOf(editTil?.title.orEmpty()) }
     var learned by remember { mutableStateOf(editTil?.learned.orEmpty()) }
     var difficulty by remember { mutableStateOf(editTil?.difficulty.orEmpty()) }
@@ -75,22 +86,19 @@ fun TilDetailScreen(
                 .padding(padding)
                 .verticalScroll(scrollState)
         ) {
-            TextField(
-                value = title,
-                onValueChange = { title },
-                placeholder = { Text("제목", style = AppTextStyle.TitleSmall.copy(color = Gray)) },
-                textStyle = AppTextStyle.TitleSmall,
+            //제목
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(Dimens.Tiny),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    .padding(horizontal = Dimens.Medium)
+                    .heightIn(75.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Text(
+                    text = title,
+                    style = AppTextStyle.TitleSmall
                 )
-            )
-
+            }
 
             HorizontalDivider(
                 thickness = 1.dp,
@@ -98,6 +106,34 @@ fun TilDetailScreen(
             )
 
             Spacer(modifier = Modifier.height(Dimens.Small))
+
+            //AI 요약
+            Row {
+                Text(
+                    text = "AI 요약",
+                    style = AppTextStyle.BodyTitle,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.Medium)
+                    .heightIn(60.dp)
+                    .background(
+                        color = PrimaryBackground,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+            ) {
+                Text(
+                    text = comment,
+                    style = AppTextStyle.Body
+                )
+            }
+
+            Spacer(modifier = Modifier.height(Dimens.XLarge))
 
             //배운 것
             Text(
@@ -107,22 +143,26 @@ fun TilDetailScreen(
                     .fillMaxWidth()
                     .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
             )
-            OutlinedTextField(
-                value = learned,
-                onValueChange = { learned },
-                minLines = 4,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium),
-                shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
-                textStyle = AppTextStyle.Body,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = White,
-                    unfocusedContainerColor = White,
-                    focusedBorderColor = Gray,
-                    unfocusedBorderColor = Gray
+                    .padding(horizontal = Dimens.Medium)
+                    .heightIn(60.dp)
+                    .background(
+                        color = White,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = Gray,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+            ) {
+                Text(
+                    text = learned,
+                    style = AppTextStyle.Body
                 )
-            )
+            }
 
             Spacer(modifier = Modifier.height(Dimens.XLarge))
 
@@ -134,22 +174,26 @@ fun TilDetailScreen(
                     .fillMaxWidth()
                     .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
             )
-            OutlinedTextField(
-                value = difficulty,
-                onValueChange = { difficulty },
-                minLines = 4,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium),
-                shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
-                textStyle = AppTextStyle.Body,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = White,
-                    unfocusedContainerColor = White,
-                    focusedBorderColor = Gray,
-                    unfocusedBorderColor = Gray
+                    .padding(horizontal = Dimens.Medium)
+                    .heightIn(60.dp)
+                    .background(
+                        color = White,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = Gray,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+            ) {
+                Text(
+                    text = difficulty,
+                    style = AppTextStyle.Body
                 )
-            )
+            }
 
             Spacer(modifier = Modifier.height(Dimens.XLarge))
 
@@ -161,22 +205,26 @@ fun TilDetailScreen(
                     .fillMaxWidth()
                     .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
             )
-            OutlinedTextField(
-                value = tomorrow,
-                onValueChange = { tomorrow },
-                minLines = 4,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium),
-                shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
-                textStyle = AppTextStyle.Body,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = White,
-                    unfocusedContainerColor = White,
-                    focusedBorderColor = Gray,
-                    unfocusedBorderColor = Gray
+                    .padding(horizontal = Dimens.Medium)
+                    .heightIn(60.dp)
+                    .background(
+                        color = White,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = Gray,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+            ) {
+                Text(
+                    text = tomorrow,
+                    style = AppTextStyle.Body
                 )
-            )
+            }
         }
     }
 }

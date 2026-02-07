@@ -108,7 +108,6 @@ fun TilCreateScreen(
                 )
             )
 
-
             HorizontalDivider(
                 thickness = 1.dp,
                 color = Gray
