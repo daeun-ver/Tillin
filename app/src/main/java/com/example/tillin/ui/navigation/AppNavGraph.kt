@@ -10,8 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.tillin.ui.screen.home.HomeScreen
-import com.example.tillin.ui.screen.til.TilCreateScreen
-import com.example.tillin.ui.screen.til.TilDetailScreen
+import com.example.tillin.ui.screen.til.create.TilCreateScreen
+import com.example.tillin.ui.screen.til.detail.TilDetailScreen
 
 @Composable
 fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier) {

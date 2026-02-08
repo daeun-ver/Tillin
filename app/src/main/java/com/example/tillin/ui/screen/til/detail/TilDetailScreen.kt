@@ -1,4 +1,4 @@
-package com.example.tillin.ui.screen.til
+package com.example.tillin.ui.screen.til.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

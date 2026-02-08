@@ -1,4 +1,4 @@
-package com.example.tillin.ui.screen.til
+package com.example.tillin.ui.screen.til.list
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
-import com.example.tillin.ui.screen.EmotionToEmoji
 import com.example.tillin.ui.screen.til.component.TilCard
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens

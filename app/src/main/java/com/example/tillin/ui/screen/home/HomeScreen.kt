@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.tillin.ui.screen.home.component.HomeTopBar
 import com.example.tillin.ui.screen.stats.StatsScreen
-import com.example.tillin.ui.screen.til.TilListScreen
+import com.example.tillin.ui.screen.til.list.TilListScreen
 
 enum class HomeTab(val label: String) {
     Home("홈"), STATS("통계")

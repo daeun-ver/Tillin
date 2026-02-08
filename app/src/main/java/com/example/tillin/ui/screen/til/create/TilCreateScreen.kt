@@ -1,4 +1,4 @@
-package com.example.tillin.ui.screen.til
+package com.example.tillin.ui.screen.til.create
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
