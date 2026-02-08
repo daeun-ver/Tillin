@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.tillin.ui.screen.EmotionToEmoji
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.White
@@ -22,6 +23,7 @@ fun TilCard(
     title: String,
     onClick: () -> Unit
 ) {
+    val emoji = EmotionToEmoji(emotion)
     Card(
         modifier = Modifier
             .fillMaxSize()
@@ -38,7 +40,7 @@ fun TilCard(
                 .padding(Dimens.XLarge)
         ) {
             Text(
-                text = "$emotion",
+                text = emoji,
                 style = AppTextStyle.TitleSmall
             )
             Box(modifier = Modifier.padding(Dimens.Nano)) { }

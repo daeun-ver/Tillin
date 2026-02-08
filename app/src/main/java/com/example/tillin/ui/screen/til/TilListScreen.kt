@@ -79,10 +79,9 @@ fun TilListScreen(
                     )
                 }
                 items(tils) { til ->
-                    val emoji = EmotionToEmoji(til.emotion)
                     TilCard(
                         onClick = { onDetail() },
-                        emotion = "$emoji",
+                        emotion = til.emotion,
                         title = til.title
                     )
                     Spacer(
