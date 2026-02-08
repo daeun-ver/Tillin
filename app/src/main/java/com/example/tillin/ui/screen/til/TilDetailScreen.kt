@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
+import com.example.tillin.ui.screen.til.component.EmotionCard
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.Gray
@@ -55,6 +56,7 @@ fun TilDetailScreen(
     editTil: TilEntity? = null
 ) {
     val scrollState = rememberScrollState()
+    var emotion by remember { mutableStateOf(editTil?.emotion.orEmpty()) }
     var comment by remember { mutableStateOf(editTil?.comment.orEmpty()) }
     var title by remember { mutableStateOf(editTil?.title.orEmpty()) }
     var learned by remember { mutableStateOf(editTil?.learned.orEmpty()) }
@@ -116,6 +118,7 @@ fun TilDetailScreen(
                         .fillMaxWidth()
                         .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
                 )
+                EmotionCard(emotion)
             }
             Box(
                 modifier = Modifier

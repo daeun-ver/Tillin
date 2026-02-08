@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
+import com.example.tillin.ui.screen.EmotionToEmoji
 import com.example.tillin.ui.screen.til.component.TilCard
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
@@ -33,9 +34,9 @@ fun TilListScreen(
     onDetail: () -> Unit
 ) {
     val dummy = listOf(
-        TilEntity(id = 1234, title = "Kotlin 공부", learned = "코틀린 문법을 공부 했다", emotion = "😊", createdAt = 1770331200000),
-        TilEntity(id = 5678, title = "Room DB 정리", learned = "Room DB를 정리했다.", emotion = "😊", createdAt = 1770331100000),
-        TilEntity(id = 1434, title = "과거 기록", learned = "어제 배운 것", emotion = "🤔", createdAt = 1770244800000)
+        TilEntity(id = 1234, title = "Kotlin 공부", learned = "코틀린 문법을 공부 했다", emotion = "만족", createdAt = 1770331200000),
+        TilEntity(id = 5678, title = "Room DB 정리", learned = "Room DB를 정리했다.", emotion = "만족", createdAt = 1770331100000),
+        TilEntity(id = 1434, title = "과거 기록", learned = "어제 배운 것", emotion = "어려움", createdAt = 1770244800000)
     )
     val timeFormat = SimpleDateFormat("yyyy-MM-dd")
     val tilGroup = dummy.groupBy { timeFormat.format(Date(it.createdAt)) }
@@ -78,9 +79,10 @@ fun TilListScreen(
                     )
                 }
                 items(tils) { til ->
+                    val emoji = EmotionToEmoji(til.emotion)
                     TilCard(
                         onClick = { onDetail() },
-                        emotion = til.emotion,
+                        emotion = "$emoji",
                         title = til.title
                     )
                     Spacer(
