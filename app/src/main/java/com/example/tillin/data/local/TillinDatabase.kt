@@ -11,19 +11,19 @@ import com.example.tillin.data.local.entity.TilEntity
     version = 1,
     exportSchema = false
 )
-abstract class TilDatabase : RoomDatabase() {
+abstract class TillinDatabase : RoomDatabase() {
     abstract fun tilDao(): TilDao
 
     companion object {
         @Volatile
-        private var INSTANCE: TilDatabase? = null
+        private var INSTANCE: TillinDatabase? = null
 
-        fun getDatabase(context: Context): TilDatabase {
+        fun getDatabase(context: Context): TillinDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    TilDatabase::class.java,
-                    "til_database"
+                    TillinDatabase::class.java,
+                    "tillin_database"
                 ).build()
                 INSTANCE = instance
                 instance
