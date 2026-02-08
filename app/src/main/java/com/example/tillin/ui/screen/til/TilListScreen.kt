@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
+import com.example.tillin.ui.screen.til.component.TilCard
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.PrimaryBackground

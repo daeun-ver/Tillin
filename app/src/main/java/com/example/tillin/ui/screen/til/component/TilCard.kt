@@ -1,4 +1,4 @@
-package com.example.tillin.ui.screen.til
+package com.example.tillin.ui.screen.til.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
