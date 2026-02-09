@@ -30,10 +30,10 @@ class TilListViewModel @Inject constructor(
                         it.copy(
                             isLoading = false,
                             tils = tilList
-                            )
+                        )
                     }
                 }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 _state.update { it.copy(isLoading = false, error = e.message) }
             }
         }
