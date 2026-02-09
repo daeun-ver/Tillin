@@ -15,9 +15,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.tillin.data.local.entity.TilEntity
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.ui.screen.til.component.TilCard
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
@@ -32,13 +34,10 @@ fun TilListScreen(
     onCreate: () -> Unit,
     onDetail: () -> Unit
 ) {
-    val dummy = listOf(
-        TilEntity(id = 1234, title = "Kotlin 공부", learned = "코틀린 문법을 공부 했다", emotion = "만족", createdAt = 1770331200000),
-        TilEntity(id = 5678, title = "Room DB 정리", learned = "Room DB를 정리했다.", emotion = "만족", createdAt = 1770331100000),
-        TilEntity(id = 1434, title = "과거 기록", learned = "어제 배운 것", emotion = "어려움", createdAt = 1770244800000)
-    )
+    val viewModel: TilListViewModel = hiltViewModel()
+    val state by viewModel.state.collectAsState()
     val timeFormat = SimpleDateFormat("yyyy-MM-dd")
-    val tilGroup = dummy.groupBy { timeFormat.format(Date(it.createdAt)) }
+    val tilGroup = state.tils.groupBy { timeFormat.format(Date(it.createdAt)) }
     Scaffold(
         modifier = Modifier,
         containerColor = PrimaryBackground,
@@ -88,8 +87,6 @@ fun TilListScreen(
                     )
                 }
             }
-
-
         }
     }
 }
