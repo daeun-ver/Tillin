@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.google.devtools.ksp)
 }
 
 android {
@@ -68,12 +68,12 @@ dependencies {
     //roomDB
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     //hilt
     implementation(libs.hilt.android)
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     //openAI
     implementation(libs.retrofit.core)
