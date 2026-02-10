@@ -15,7 +15,7 @@ class TilRepository @Inject constructor(
 
     suspend fun insertTil(til: TilEntity) = tilDao.insertTil(til)
 
-    suspend fun updateTil(id: Long, til: TilEntity) = tilDao.updateTil(til)
+    suspend fun updateTil(til: TilEntity) = tilDao.updateTil(til)
 
-    suspend fun deleteTil(id: Long, til: TilEntity) = tilDao.deleteTil(til)
+    suspend fun deleteTil(til: TilEntity) = tilDao.deleteTil(til)
 }

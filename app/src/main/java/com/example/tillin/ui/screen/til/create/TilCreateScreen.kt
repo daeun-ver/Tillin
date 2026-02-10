@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
@@ -48,6 +49,8 @@ fun TilCreateScreen(
     editTil: TilEntity? = null
 ) {
     val scrollState = rememberScrollState()
+    val viewModel: TilCreateViewModel = hiltViewModel()
+
     var title by remember { mutableStateOf(editTil?.title.orEmpty()) }
     var learned by remember { mutableStateOf(editTil?.learned.orEmpty()) }
     var difficulty by remember { mutableStateOf(editTil?.difficulty.orEmpty()) }
@@ -63,7 +66,25 @@ fun TilCreateScreen(
                     title = {},
                     colors = TopAppBarDefaults.topAppBarColors(White),
                     navigationIcon = {
-                        IconButton(onClick = { onBack() }) {
+                        IconButton(
+                            onClick = {
+                                val finalTil = TilEntity(
+                                    id = editTil?.id ?: 0L,
+                                    title = title,
+                                    learned = learned,
+                                    difficulty = difficulty,
+                                    tomorrow = tomorrow,
+                                    emotion = null,
+                                    comment = null
+                                )
+                                viewModel.saveTil(
+                                    onSuccess = {
+                                        onDone()
+                                    },
+                                    til = finalTil
+                                )
+                            }
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = "뒤로가기"
@@ -94,7 +115,7 @@ fun TilCreateScreen(
         ) {
             TextField(
                 value = title,
-                onValueChange = { title },
+                onValueChange = { title = it },
                 placeholder = { Text("제목", style = AppTextStyle.TitleSmall.copy(color = Gray)) },
                 textStyle = AppTextStyle.TitleSmall,
                 modifier = Modifier
@@ -125,7 +146,7 @@ fun TilCreateScreen(
             )
             OutlinedTextField(
                 value = learned,
-                onValueChange = { learned },
+                onValueChange = { learned = it },
                 minLines = 4,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -152,7 +173,7 @@ fun TilCreateScreen(
             )
             OutlinedTextField(
                 value = difficulty,
-                onValueChange = { difficulty },
+                onValueChange = { difficulty = it },
                 minLines = 4,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -179,7 +200,7 @@ fun TilCreateScreen(
             )
             OutlinedTextField(
                 value = tomorrow,
-                onValueChange = { tomorrow },
+                onValueChange = { tomorrow = it },
                 minLines = 4,
                 modifier = Modifier
                     .fillMaxWidth()

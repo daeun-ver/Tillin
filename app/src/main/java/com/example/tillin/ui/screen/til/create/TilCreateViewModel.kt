@@ -25,7 +25,9 @@ class TilCreateViewModel @Inject constructor(
                 val til = repository.getTilById(id)
                 _state.value = _state.value.copy(
                     isLoading = false,
-                    til = til,
+                    title = til?.title ?: "",
+                    learned = til?.learned ?: "",
+                    tomorrow = til?.tomorrow ?: "",
                     error = null,
                     success = true
                 )
@@ -40,39 +42,20 @@ class TilCreateViewModel @Inject constructor(
         }
     }
 
-    fun createTil(
-        tils: TilEntity,
+    fun saveTil(
+        til: TilEntity,
         onSuccess: () -> Unit = {},
         onError: (Exception) -> Unit = {}
     ) {
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
-                repository.insertTil(tils)
-                _state.value = _state.value.copy(success = true)
-                onSuccess()
-            } catch (e: Exception) {
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    error = e.message,
-                    success = false
-                )
-                onError(e)
-            }
-        }
-    }
+                if (til.id == 0L) {
+                    repository.insertTil(til)
+                } else {
+                    repository.updateTil(til)
+                }
 
-    fun updateTil(
-        id: Long,
-        til: TilEntity,
-        onSuccess: () -> Unit,
-        onError: (Exception) -> Unit
-    ) {
-        viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true, error = null, success = false)
-            try {
-                repository.updateTil(id, til)
-                loadTil(id)
                 _state.value = _state.value.copy(success = true)
                 onSuccess()
             } catch (e: Exception) {
