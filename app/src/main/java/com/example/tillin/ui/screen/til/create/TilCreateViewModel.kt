@@ -3,6 +3,7 @@ package com.example.tillin.ui.screen.til.create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tillin.data.local.entity.TilEntity
+import com.example.tillin.data.remote.OpenAIService
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TilCreateViewModel @Inject constructor(
-    private val repository: TilRepository
+    private val repository: TilRepository,
+    private val openAIService: OpenAIService
 ) : ViewModel() {
     private val _state = MutableStateFlow(TilCreateState())
     val state: StateFlow<TilCreateState> = _state.asStateFlow()
@@ -50,11 +52,25 @@ class TilCreateViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
+                val analysis = openAIService.analyzeTil(
+                    title = til.title,
+                    learned = til.learned,
+                    difficulty = til.difficulty?.ifBlank { null },
+                    tomorrow = til.tomorrow?.ifBlank { null }
+                )
+                val finalTil = til.copy(
+                    emotion = analysis.emotion,
+                    emotionScore = analysis.emotionScore,
+                    difficultyLevel = analysis.difficultyLevel,
+                    comment = analysis.comment
+                )
+
                 if (til.id == 0L) {
-                    repository.insertTil(til)
+                    repository.insertTil(finalTil)
                 } else {
-                    repository.updateTil(til)
+                    repository.updateTil(finalTil)
                 }
+
 
                 _state.value = _state.value.copy(success = true)
                 onSuccess()
