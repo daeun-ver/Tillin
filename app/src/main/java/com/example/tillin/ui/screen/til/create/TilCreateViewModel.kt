@@ -75,7 +75,7 @@ class TilCreateViewModel @Inject constructor(
                 """.trimIndent()
 
                 val response = openAIService.analyzeTil(
-                    auth = "Bearer ${BuildConfig.OPEN_API_KEY}",
+                    auth = "Bearer ${BuildConfig.OPENAI_API_KEY}",
                     request = ChatRequest(
                         messages = listOf(
                             Message("user", prompt)
@@ -84,11 +84,14 @@ class TilCreateViewModel @Inject constructor(
                 )
 
                 val content = response.choices[0].message.content
+                val startIndex = content.indexOf("{")
+                val endIndex = content.lastIndexOf("}")
 
-                val clean = content
-                    .replace("```json", "")
-                    .replace("```", "")
-                    .trim()
+                val clean = if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
+                    content.substring(startIndex, endIndex + 1)
+                } else {
+                    content.replace("```json", "").replace("```", "").trim()
+                }
 
                 val json = JSONObject(clean)
 
