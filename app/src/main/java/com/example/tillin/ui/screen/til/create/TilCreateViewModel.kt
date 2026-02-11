@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tillin.BuildConfig
 import com.example.tillin.data.local.entity.TilEntity
-import com.example.tillin.data.remote.Message
+import com.example.tillin.data.remote.InputContent
+import com.example.tillin.data.remote.InputMessage
 import com.example.tillin.data.remote.OpenAIRequest
 import com.example.tillin.data.remote.OpenAIService
 import com.example.tillin.data.repository.TilRepository
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,6 +22,7 @@ class TilCreateViewModel @Inject constructor(
     private val repository: TilRepository,
     private val openAIService: OpenAIService
 ) : ViewModel() {
+
     private val _state = MutableStateFlow(TilCreateState())
     val state: StateFlow<TilCreateState> = _state.asStateFlow()
 
@@ -36,7 +39,6 @@ class TilCreateViewModel @Inject constructor(
                     error = null,
                     success = true
                 )
-
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
                     isLoading = false,
@@ -57,13 +59,13 @@ class TilCreateViewModel @Inject constructor(
             try {
                 val prompt = """
                     당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용을 분석해 JSON으로 응답해 주세요.
-            
+
                     [TIL 내용]
                     제목: ${til.title}
                     오늘 배운 것: ${til.learned}
                     어려웠던 점: ${til.difficulty ?: "없음"}
                     내일 할 일: ${til.tomorrow ?: "없음"}
-            
+
                     [분석 요청]
                     {
                         "emotion": "성취감/만족/평범/어려움/좌절 중 하나",
@@ -71,19 +73,24 @@ class TilCreateViewModel @Inject constructor(
                         "difficultyLevel": "쉬움/보통/어려움/매우 어려움 중 하나",
                         "comment": "격려나 조언 한 문장 (20자 이내)"
                     }
-                    """.trimIndent()
+                """.trimIndent()
 
                 val request = OpenAIRequest(
-                    messages = listOf(Message(role = "user", content = prompt))
+                    input = listOf(
+                        InputMessage(
+                            role = "user",
+                            content = listOf(InputContent(text = prompt))
+                        )
+                    )
                 )
 
                 val response = openAIService.analyzeTil(
-                    token = "Bearer ${BuildConfig.OPENAI_API_KEY}",
+                    auth = "Bearer ${BuildConfig.OPEN_API_KEY}",
                     request = request
                 )
 
-                val content = response.choices[0].message.content
-                val json = org.json.JSONObject(content)
+                val content = response.output[0].content[0].text
+                val json = JSONObject(content)
 
                 val finalTil = til.copy(
                     emotion = json.getString("emotion"),
@@ -98,9 +105,10 @@ class TilCreateViewModel @Inject constructor(
                     repository.updateTil(finalTil)
                 }
 
-
                 _state.value = _state.value.copy(success = true)
                 onSuccess()
+                android.util.Log.e("TILLIN_DEBUG", "저장성공 ㅋㅁ")
+
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
                     isLoading = false,
@@ -108,8 +116,12 @@ class TilCreateViewModel @Inject constructor(
                     success = false
                 )
                 onError(e)
+                if (e is retrofit2.HttpException) {
+                    val errorBody = e.response()?.errorBody()?.string()
+                    android.util.Log.e("TILLIN_DEBUG", "OpenAI 응답: $errorBody")
+                }
+                android.util.Log.e("TILLIN_DEBUG", "에러 발생!!! : ${e.message}")
             }
         }
     }
-
 }

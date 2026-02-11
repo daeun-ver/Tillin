@@ -17,7 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "OPENAI_API_KEY", "\"${project.findProperty("OPENAI_API_KEY") ?: ""}\"")
+        buildConfigField("String", "OPEN_API_KEY", "\"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\"")
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

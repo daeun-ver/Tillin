@@ -67,6 +67,16 @@ fun TilCreateScreen(
                     colors = TopAppBarDefaults.topAppBarColors(White),
                     navigationIcon = {
                         IconButton(
+                            onClick = { onDone() }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "뒤로가기"
+                            )
+                        }
+                    },
+                    actions = {
+                        TextButton(
                             onClick = {
                                 val finalTil = TilEntity(
                                     id = editTil?.id ?: 0L,
@@ -84,16 +94,6 @@ fun TilCreateScreen(
                                     til = finalTil
                                 )
                             }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "뒤로가기"
-                            )
-                        }
-                    },
-                    actions = {
-                        TextButton(
-                            onClick = { onDone() }
                         ) {
                             Text(
                                 text = "저장",
