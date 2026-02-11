@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,11 @@ fun TilListScreen(
     val state by viewModel.state.collectAsState()
     val timeFormat = SimpleDateFormat("yyyy-MM-dd")
     val tilGroup = state.tils.groupBy { timeFormat.format(Date(it.createdAt)) }
+
+    LaunchedEffect(Unit) {
+        viewModel.loadTilList()
+    }
+
     Scaffold(
         modifier = Modifier,
         containerColor = PrimaryBackground,
