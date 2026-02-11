@@ -137,7 +137,11 @@ fun TilDetailScreen(
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
-                Text(text = comment, style = AppTextStyle.Body)
+                Text(
+                    text = comment,
+                    style = AppTextStyle.Body,
+                    modifier = Modifier.padding(Dimens.Small)
+                )
             }
 
             Spacer(modifier = Modifier.height(Dimens.XLarge))
@@ -165,7 +169,11 @@ fun TilDetailScreen(
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
-                Text(text = learned, style = AppTextStyle.Body)
+                Text(
+                    text = learned,
+                    style = AppTextStyle.Body,
+                    modifier = Modifier.padding(Dimens.Small)
+                )
             }
 
             Spacer(modifier = Modifier.height(Dimens.XLarge))
@@ -193,7 +201,11 @@ fun TilDetailScreen(
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
-                Text(text = difficulty, style = AppTextStyle.Body)
+                Text(
+                    text = difficulty,
+                    style = AppTextStyle.Body,
+                    modifier = Modifier.padding(Dimens.Small)
+                )
             }
 
             Spacer(modifier = Modifier.height(Dimens.XLarge))
@@ -221,7 +233,11 @@ fun TilDetailScreen(
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
-                Text(text = tomorrow, style = AppTextStyle.Body)
+                Text(
+                    text = tomorrow,
+                    style = AppTextStyle.Body,
+                    modifier = Modifier.padding(Dimens.Small)
+                )
             }
         }
     }
