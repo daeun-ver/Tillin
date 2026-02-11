@@ -33,7 +33,7 @@ import java.util.Date
 @Composable
 fun TilListScreen(
     onCreate: () -> Unit,
-    onDetail: () -> Unit
+    onDetail: (Long) -> Unit
 ) {
     val viewModel: TilListViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
@@ -84,7 +84,7 @@ fun TilListScreen(
                 }
                 items(tils) { til ->
                     TilCard(
-                        onClick = { onDetail() },
+                        onClick = { onDetail(til.id) },
                         emotion = til.emotion,
                         title = til.title
                     )

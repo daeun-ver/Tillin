@@ -27,6 +27,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.screen.til.component.DifficultyCard
 import com.example.tillin.ui.screen.til.component.EmotionCard
@@ -46,22 +49,32 @@ import com.example.tillin.ui.theme.White
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TilDetailScreen(
+    tilId: Long,
     onBack: () -> Unit,
-    editTil: TilEntity? = null
+    editTil: TilEntity? = null,
+    viewModel: TilDetailViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
-    var emotion = "좌절"
-    var difficultyLevel = "어려움"
-    var comment by remember { mutableStateOf(editTil?.comment.orEmpty()) }
-    var title by remember { mutableStateOf(editTil?.title.orEmpty()) }
-    var learned by remember { mutableStateOf(editTil?.learned.orEmpty()) }
-    var difficulty by remember { mutableStateOf(editTil?.difficulty.orEmpty()) }
-    var tomorrow by remember { mutableStateOf(editTil?.tomorrow.orEmpty()) }
+
+    val tilFromDb by viewModel.state.collectAsState()
+
+    LaunchedEffect(tilId) {
+        viewModel.loadTil(tilId)
+    }
+
+    val til = tilFromDb ?: editTil ?: return
+
+    var emotion = til.emotion
+    var difficultyLevel = til.difficultyLevel
+    var comment by remember { mutableStateOf(til.comment.orEmpty()) }
+    var title by remember { mutableStateOf(til.title.orEmpty()) }
+    var learned by remember { mutableStateOf(til.learned.orEmpty()) }
+    var difficulty by remember { mutableStateOf(til.difficulty.orEmpty()) }
+    var tomorrow by remember { mutableStateOf(til.tomorrow.orEmpty()) }
+
     Scaffold(
         topBar = {
-            Surface(
-                shadowElevation = 2.dp
-            ) {
+            Surface(shadowElevation = 2.dp) {
                 TopAppBar(
                     title = {},
                     colors = TopAppBarDefaults.topAppBarColors(White),
@@ -83,7 +96,7 @@ fun TilDetailScreen(
                 .padding(padding)
                 .verticalScroll(scrollState)
         ) {
-            //제목
+            // 제목
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -91,36 +104,29 @@ fun TilDetailScreen(
                     .heightIn(75.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
-                Text(
-                    text = title,
-                    style = AppTextStyle.TitleSmall
-                )
+                Text(text = title, style = AppTextStyle.TitleSmall)
             }
 
-            HorizontalDivider(
-                thickness = 1.dp,
-                color = Gray
-            )
-
+            HorizontalDivider(thickness = 1.dp, color = Gray)
             Spacer(modifier = Modifier.height(Dimens.Small))
 
-            //AI 요약
+            // AI 요약
             Row {
                 Text(
                     text = "AI 요약",
                     style = AppTextStyle.BodyTitle,
-                    modifier = Modifier
-                        .padding(
-                            start = Dimens.XLarge,
-                            end = Dimens.Small,
-                            top = Dimens.Nano,
-                            bottom = Dimens.Nano
-                        )
+                    modifier = Modifier.padding(
+                        start = Dimens.XLarge,
+                        end = Dimens.Small,
+                        top = Dimens.Nano,
+                        bottom = Dimens.Nano
+                    )
                 )
                 EmotionCard(emotion)
                 Spacer(modifier = Modifier.width(Dimens.Tiny))
                 DifficultyCard(difficultyLevel)
             }
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -131,15 +137,12 @@ fun TilDetailScreen(
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
-                Text(
-                    text = comment,
-                    style = AppTextStyle.Body
-                )
+                Text(text = comment, style = AppTextStyle.Body)
             }
 
             Spacer(modifier = Modifier.height(Dimens.XLarge))
 
-            //배운 것
+            // 배운 것
             Text(
                 text = "배운 것",
                 style = AppTextStyle.BodyTitle,
@@ -162,15 +165,12 @@ fun TilDetailScreen(
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
-                Text(
-                    text = learned,
-                    style = AppTextStyle.Body
-                )
+                Text(text = learned, style = AppTextStyle.Body)
             }
 
             Spacer(modifier = Modifier.height(Dimens.XLarge))
 
-            //어려운 점
+            // 어려운 점
             Text(
                 text = "어려운 점",
                 style = AppTextStyle.BodyTitle,
@@ -193,15 +193,12 @@ fun TilDetailScreen(
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
-                Text(
-                    text = difficulty,
-                    style = AppTextStyle.Body
-                )
+                Text(text = difficulty, style = AppTextStyle.Body)
             }
 
             Spacer(modifier = Modifier.height(Dimens.XLarge))
 
-            //내일 할 일
+            // 내일 할 일
             Text(
                 text = "내일 할 일",
                 style = AppTextStyle.BodyTitle,
@@ -224,10 +221,7 @@ fun TilDetailScreen(
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
-                Text(
-                    text = tomorrow,
-                    style = AppTextStyle.Body
-                )
+                Text(text = tomorrow, style = AppTextStyle.Body)
             }
         }
     }

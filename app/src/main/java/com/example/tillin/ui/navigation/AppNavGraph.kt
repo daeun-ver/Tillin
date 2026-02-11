@@ -57,16 +57,10 @@ fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier)
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(
-            route = "detail",
-            enterTransition = {
-                slideInHorizontally(initialOffsetX = { it })
-            },
-            popExitTransition = {
-                slideOutHorizontally(targetOffsetX = { it })
-            }
-        ) {
+        composable("tilDetail/{tilId}") {
+            val tilId = it.arguments?.getString("tilId")?.toLong() ?: 0L
             TilDetailScreen(
+                tilId = tilId,
                 onBack = { navController.popBackStack() }
             )
         }

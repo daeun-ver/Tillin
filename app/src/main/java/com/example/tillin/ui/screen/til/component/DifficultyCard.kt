@@ -13,7 +13,7 @@ import com.example.tillin.ui.theme.Gray
 
 @Composable
 fun DifficultyCard (
-    difficultyLevel: String
+    difficultyLevel: String?
 ) {
     Card (
         modifier = Modifier.padding(),
@@ -21,7 +21,7 @@ fun DifficultyCard (
         colors = CardDefaults.cardColors(Gray)
     ) {
         Text(
-            text = difficultyLevel,
+            text = difficultyLevel.toString(),
             style = AppTextStyle.BodySmall,
             modifier = Modifier.padding(vertical = Dimens.Nano, horizontal = Dimens.Tiny)
         )
