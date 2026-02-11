@@ -5,38 +5,30 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface OpenAIService {
-    @POST("v1/responses")
+    @POST("v1/chat/completions")
     suspend fun analyzeTil(
         @Header("Authorization") auth: String,
-        @Header("Content-Type") contentType: String = "application/json",
-        @Body request: OpenAIRequest
-    ): OpenAIResponse
+        @Header("HTTP-Referer") referer: String = "https://tillin.app",
+        @Header("X-Title") title: String = "tillin",
+        @Body request: ChatRequest
+    ): ChatResponse
 }
 
-data class OpenAIRequest(
-    val model: String = "gpt-4.1-mini",
-    val input: List<InputMessage>
+data class ChatRequest(
+    val model: String = "mistralai/mistral-7b-instruct",
+    val messages: List<Message>,
+    val temperature: Double = 0.7
 )
 
-data class InputMessage(
+data class Message(
     val role: String,
-    val content: List<InputContent>
+    val content: String
 )
 
-data class InputContent(
-    val type: String = "input_text",
-    val text: String
+data class ChatResponse(
+    val choices: List<Choice>
 )
 
-data class OpenAIResponse(
-    val output: List<OutputItem>
-)
-
-data class OutputItem(
-    val content: List<OutputContent>
-)
-
-data class OutputContent(
-    val type: String,
-    val text: String
+data class Choice(
+    val message: Message
 )

@@ -17,7 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "OPEN_API_KEY", "\"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\"")
+        buildConfigField("String", "OPEN_API_KEY", "\"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\"")
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

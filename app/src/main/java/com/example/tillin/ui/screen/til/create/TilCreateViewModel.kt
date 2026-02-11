@@ -4,9 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tillin.BuildConfig
 import com.example.tillin.data.local.entity.TilEntity
-import com.example.tillin.data.remote.InputContent
-import com.example.tillin.data.remote.InputMessage
-import com.example.tillin.data.remote.OpenAIRequest
+import com.example.tillin.data.remote.ChatRequest
+import com.example.tillin.data.remote.Message
 import com.example.tillin.data.remote.OpenAIService
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -75,22 +74,23 @@ class TilCreateViewModel @Inject constructor(
                     }
                 """.trimIndent()
 
-                val request = OpenAIRequest(
-                    input = listOf(
-                        InputMessage(
-                            role = "user",
-                            content = listOf(InputContent(text = prompt))
+                val response = openAIService.analyzeTil(
+                    auth = "Bearer ${BuildConfig.OPEN_API_KEY}",
+                    request = ChatRequest(
+                        messages = listOf(
+                            Message("user", prompt)
                         )
                     )
                 )
 
-                val response = openAIService.analyzeTil(
-                    auth = "Bearer ${BuildConfig.OPEN_API_KEY}",
-                    request = request
-                )
+                val content = response.choices[0].message.content
 
-                val content = response.output[0].content[0].text
-                val json = JSONObject(content)
+                val clean = content
+                    .replace("```json", "")
+                    .replace("```", "")
+                    .trim()
+
+                val json = JSONObject(clean)
 
                 val finalTil = til.copy(
                     emotion = json.getString("emotion"),
@@ -107,7 +107,7 @@ class TilCreateViewModel @Inject constructor(
 
                 _state.value = _state.value.copy(success = true)
                 onSuccess()
-                android.util.Log.e("TILLIN_DEBUG", "저장성공 ㅋㅁ")
+                android.util.Log.e("TILLIN_DEBUG", "저장성공")
 
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
@@ -118,7 +118,7 @@ class TilCreateViewModel @Inject constructor(
                 onError(e)
                 if (e is retrofit2.HttpException) {
                     val errorBody = e.response()?.errorBody()?.string()
-                    android.util.Log.e("TILLIN_DEBUG", "OpenAI 응답: $errorBody")
+                    android.util.Log.e("TILLIN_DEBUG", "OpenRouter 응답: $errorBody")
                 }
                 android.util.Log.e("TILLIN_DEBUG", "에러 발생!!! : ${e.message}")
             }
