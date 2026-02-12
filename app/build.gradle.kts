@@ -17,9 +17,18 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "OPENAI_API_KEY", "\"${project.findProperty("OPENAI_API_KEY") ?: ""}\"")
+        val localFile = rootProject.file("local.properties")
+        var myKey = ""
 
-
+        if (localFile.exists()) {
+            val lines = localFile.readLines()
+            for (line in lines) {
+                if (line.startsWith("OPENAI_API_KEY=")) {
+                    myKey = line.substringAfter("=").trim()
+                }
+            }
+        }
+        buildConfigField("String", "OPENAI_API_KEY", "\"$myKey\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

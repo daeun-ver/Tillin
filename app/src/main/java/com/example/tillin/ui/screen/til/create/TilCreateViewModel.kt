@@ -1,5 +1,6 @@
 package com.example.tillin.ui.screen.til.create
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tillin.BuildConfig
@@ -122,6 +123,7 @@ class TilCreateViewModel @Inject constructor(
                 if (e is retrofit2.HttpException) {
                     val errorBody = e.response()?.errorBody()?.string()
                     android.util.Log.e("TILLIN_DEBUG", "OpenRouter 응답: $errorBody")
+                    Log.d("API_KEY_TEST", BuildConfig.OPENAI_API_KEY)
                 }
                 android.util.Log.e("TILLIN_DEBUG", "에러 발생!!! : ${e.message}")
             }
