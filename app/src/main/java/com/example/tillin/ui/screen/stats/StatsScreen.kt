@@ -22,16 +22,20 @@ enum class StatsTab(val label: String) {
 @Composable
 fun StatsScreen() {
     var statsSelectedTab by remember() { mutableStateOf(StatsTab.WEEK) }
-    Scaffold() { inner ->
+    Scaffold(
+        modifier = Modifier,
+        bottomBar = {
+            StatsTabBar(
+                selected = statsSelectedTab,
+                onSelected = { statsSelectedTab = it }
+            )
+        }
+    ) { inner ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(inner)
         ) {
-            StatsTabBar(
-                selected = statsSelectedTab,
-                onSelected = { statsSelectedTab = it }
-            )
 
             when (statsSelectedTab) {
                 StatsTab.WEEK -> WeekTab()
