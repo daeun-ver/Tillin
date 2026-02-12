@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import com.example.tillin.ui.screen.stats.component.StatsTabBar
 import com.example.tillin.ui.screen.stats.month.MonthTab
 import com.example.tillin.ui.screen.stats.week.WeekTab
+import com.example.tillin.ui.theme.Dimens
 
 enum class StatsTab(val label: String) {
     WEEK("주간"), MONTH("월간")
