@@ -40,10 +40,6 @@ fun TilListScreen(
     val timeFormat = SimpleDateFormat("yyyy-MM-dd")
     val tilGroup = state.tils.groupBy { timeFormat.format(Date(it.createdAt)) }
 
-    LaunchedEffect(Unit) {
-        viewModel.loadTilList()
-    }
-
     Scaffold(
         modifier = Modifier,
         containerColor = PrimaryBackground,
@@ -86,7 +82,8 @@ fun TilListScreen(
                     TilCard(
                         onClick = { onDetail(til.id) },
                         emotion = til.emotion,
-                        title = til.title
+                        title = til.title,
+                        onDelete = { viewModel.deleteTil(til) }
                     )
                     Spacer(
                         modifier = Modifier.height(Dimens.Tiny)
