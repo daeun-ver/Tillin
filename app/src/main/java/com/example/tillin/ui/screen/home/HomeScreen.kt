@@ -22,9 +22,7 @@ enum class HomeTab(val label: String) {
 @Composable
 fun HomeScreen(navController: NavHostController) {
     var homeSelectedTab by remember { mutableStateOf(HomeTab.Home) }
-    Scaffold(topBar = {
-
-    }) { inner ->
+    Scaffold() { inner ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
