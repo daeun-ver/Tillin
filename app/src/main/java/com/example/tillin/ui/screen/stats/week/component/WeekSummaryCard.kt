@@ -18,10 +18,11 @@ import com.example.tillin.ui.theme.White
 
 @Composable
 fun WeekSummaryCard (
-    summary: String
+    summary: String,
+    modifier: Modifier = Modifier
 ) {
     Card (
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(Dimens.Tiny),
         shape = RoundedCornerShape(Dimens.TILCornerRadius),
