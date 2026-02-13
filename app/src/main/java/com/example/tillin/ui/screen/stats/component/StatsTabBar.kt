@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.tillin.ui.screen.stats.StatsTab
@@ -30,6 +31,10 @@ fun StatsTabBar(
     Row(
         modifier = modifier
             .padding(bottom = Dimens.Large)
+            .shadow(
+                elevation = 1.dp,
+                shape = RoundedCornerShape(Dimens.TabBarCornerRadius)
+            )
             .clip(RoundedCornerShape(Dimens.TabBarCornerRadius))
             .background(White)
             .border(
