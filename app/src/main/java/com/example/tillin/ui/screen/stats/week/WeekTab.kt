@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.tillin.ui.screen.stats.week.component.WeekSummaryCard
 import com.example.tillin.ui.theme.PrimaryBackground
 
 @Composable
@@ -17,7 +18,7 @@ fun WeekTab() {
     ) { padding ->
         Column(modifier = Modifier.fillMaxSize()
             .padding(padding)) {
-            Text("WeekScreen")
+            WeekSummaryCard(summary = "굿굿ㄱ숛굿")
         }
     }
 }
