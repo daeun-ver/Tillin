@@ -38,8 +38,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.data.local.entity.TilEntity
-import com.example.tillin.ui.screen.til.component.DifficultyCard
-import com.example.tillin.ui.screen.til.component.EmotionCard
+import com.example.tillin.ui.screen.til.component.DifficultyTag
+import com.example.tillin.ui.screen.til.component.EmotionTag
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.Gray
@@ -122,9 +122,9 @@ fun TilDetailScreen(
                         bottom = Dimens.Nano
                     )
                 )
-                EmotionCard(emotion)
+                EmotionTag(emotion)
                 Spacer(modifier = Modifier.width(Dimens.Tiny))
-                DifficultyCard(difficultyLevel)
+                DifficultyTag(difficultyLevel)
             }
 
             Box(

@@ -7,23 +7,21 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.tillin.ui.screen.EmotionToEmoji
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.PrimaryTenthColor
+import com.example.tillin.ui.theme.Gray
 
 @Composable
-fun EmotionCard (
-    emotion: String?
+fun DifficultyTag (
+    difficultyLevel: String?
 ) {
-    val emoji = EmotionToEmoji(emotion)
     Card (
         modifier = Modifier.padding(),
         shape = RoundedCornerShape(Dimens.TILCornerRadius),
-        colors = CardDefaults.cardColors(PrimaryTenthColor)
+        colors = CardDefaults.cardColors(Gray)
     ) {
         Text(
-            text = "$emoji $emotion",
+            text = difficultyLevel.toString(),
             style = AppTextStyle.BodySmall,
             modifier = Modifier.padding(vertical = Dimens.Nano, horizontal = Dimens.Tiny)
         )
