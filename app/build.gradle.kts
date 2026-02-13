@@ -94,4 +94,7 @@ dependencies {
     implementation(libs.okhttp.core)
     implementation(libs.okhttp.logging)
     implementation(libs.json.org)
+
+    //vico 차트
+    implementation("com.patrykandpatrick.vico:compose-m3:1.13.1")
 }
