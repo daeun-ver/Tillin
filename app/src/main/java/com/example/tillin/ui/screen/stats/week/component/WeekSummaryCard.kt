@@ -1,5 +1,6 @@
 package com.example.tillin.ui.screen.stats.week.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,30 +13,29 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
+import com.example.tillin.ui.theme.Gray
 import com.example.tillin.ui.theme.White
 
 @Composable
-fun WeekSummaryCard (
+fun WeekSummaryCard(
     summary: String,
     modifier: Modifier = Modifier
 ) {
-    Card (
+    Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(Dimens.Tiny),
         shape = RoundedCornerShape(Dimens.TILCornerRadius),
-        colors = CardDefaults.cardColors(White)
-    ){
-        Column (
-            modifier = Modifier
-                .padding(Dimens.Large)
-        ){
-            Text(
-                text = "이번 주 요약",
-                style = AppTextStyle.BodySmall
-            )
+        colors = CardDefaults.cardColors(White),
+        border = BorderStroke(1.dp, Gray)
+    ) {
+        Column(
+            modifier = Modifier.padding(Dimens.Large)
+        ) {
+            Text(text = "이번 주 요약", style = AppTextStyle.BodySmall)
             Spacer(modifier = Modifier.height(Dimens.Tiny))
             Text(
                 text = summary,
