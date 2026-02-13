@@ -30,7 +30,7 @@ fun StatsTabBar(
 ) {
     Row(
         modifier = modifier
-        //    .padding(bottom = Dimens.Large)
+            .padding(bottom = Dimens.Large)
             .clip(RoundedCornerShape(Dimens.TabBarCornerRadius))
             .background(White)
             .border(
