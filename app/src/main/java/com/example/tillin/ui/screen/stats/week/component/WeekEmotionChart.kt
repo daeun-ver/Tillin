@@ -2,7 +2,9 @@ package com.example.tillin.ui.screen.stats.week.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -17,6 +19,7 @@ import com.example.tillin.ui.theme.DarkGray
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.Gray
 import com.example.tillin.ui.theme.White
+import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.line.lineChart
@@ -47,9 +50,10 @@ fun WeekEmotionChart(
         border = BorderStroke(1.dp, Gray)
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier.padding(Dimens.Large)
         ) {
             Text(text = "이번 주 감정 분석", style = AppTextStyle.BodySmall)
+            Spacer(modifier = Modifier.height(Dimens.Tiny))
             Chart(
                 chart = lineChart(
                     lines = listOf(
@@ -61,6 +65,10 @@ fun WeekEmotionChart(
                     .fillMaxWidth()
                     .padding(Dimens.Tiny),
                 startAxis = rememberStartAxis(
+                    valueFormatter = { },
+                    guideline = null
+                ),
+                bottomAxis = rememberBottomAxis(
 
                 )
             )
