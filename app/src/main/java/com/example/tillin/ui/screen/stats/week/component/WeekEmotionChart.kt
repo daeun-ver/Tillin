@@ -15,15 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.theme.AppTextStyle
-import com.example.tillin.ui.theme.DarkGray
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.Gray
+import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.line.lineChart
 import com.patrykandpatrick.vico.compose.chart.line.lineSpec
+import com.patrykandpatrick.vico.core.axis.AxisItemPlacer
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.core.entry.entryOf
 
@@ -57,7 +58,7 @@ fun WeekEmotionChart(
             Chart(
                 chart = lineChart(
                     lines = listOf(
-                        lineSpec(DarkGray)
+                        lineSpec(lineColor = PrimaryColor),
                     )
                 ),
                 model = chartEntryModel,
@@ -65,11 +66,22 @@ fun WeekEmotionChart(
                     .fillMaxWidth()
                     .padding(Dimens.Tiny),
                 startAxis = rememberStartAxis(
-                    valueFormatter = { },
+                    valueFormatter = { value, _ ->
+                            when (value.toInt()) {
+                                1 -> "😭"
+                                2 -> "😓"
+                                3 -> "😐"
+                                4 -> "😊"
+                                5 -> "😍"
+                                else -> ""
+                            }
+
+                    },
+                    itemPlacer = AxisItemPlacer.Vertical.default(maxItemCount = 6),
                     guideline = null
                 ),
                 bottomAxis = rememberBottomAxis(
-
+                    guideline = null
                 )
             )
         }
