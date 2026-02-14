@@ -66,7 +66,7 @@ fun TilListScreen(
         ) {
             tilGroup.toList().forEachIndexed { index, (date, tils) ->
                 item {
-                    val topSpace = if (index == 0) Dimens.Nano else Dimens.XXLarge
+                    val topSpace = if (index == 0) Dimens.Nano else Dimens.XLarge
                     Spacer(modifier = Modifier.height(topSpace))
 
                     Text(
