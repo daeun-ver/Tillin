@@ -71,14 +71,14 @@ fun WeekEmotionChart(
                     .padding(Dimens.Tiny),
                 startAxis = rememberStartAxis(
                     valueFormatter = { value, _ ->
-                            when (value.toInt()) {
-                                1 -> "😭"
-                                2 -> "😓"
-                                3 -> "😐"
-                                4 -> "😊"
-                                5 -> "😍"
-                                else -> ""
-                            }
+                        when (value.toInt()) {
+                            1 -> "😭"
+                            2 -> "😓"
+                            3 -> "😐"
+                            4 -> "😊"
+                            5 -> "😍"
+                            else -> ""
+                        }
 
                     },
                     itemPlacer = AxisItemPlacer.Vertical.default(maxItemCount = 6),
@@ -86,7 +86,7 @@ fun WeekEmotionChart(
                 ),
                 bottomAxis = rememberBottomAxis(
                     valueFormatter = { value, _ ->
-                        days.getOrElse(value.toInt()) {""}
+                        days.getOrElse(value.toInt()) { "" }
                     },
                     guideline = null,
                     itemPlacer = AxisItemPlacer.Horizontal.default(
