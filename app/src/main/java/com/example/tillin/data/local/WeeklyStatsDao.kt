@@ -9,13 +9,13 @@ import com.example.tillin.data.local.entity.TilEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface MonthlyDao {
+interface WeeklyStatsDao {
     @Query("SELECT * FROM weeklystats WHERE year = :year AND month = :month AND week = :week")
-    fun getMonthlyTil(year: Int, month: Int, week: Int): Flow<List<TilEntity>>
+    fun getWeeklyTil(year: Int, month: Int, week: Int): Flow<List<TilEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMonthlyTil(til: TilEntity): Long
+    suspend fun insertWeeklyTil(til: TilEntity): Long
 
     @Update
-    suspend fun updateMonthlyTil(til: TilEntity)
+    suspend fun updateWeeklyTil(til: TilEntity)
 }
