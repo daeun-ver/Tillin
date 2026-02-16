@@ -1,7 +1,5 @@
 package com.example.tillin.ui.screen.til.create
 
-import com.example.tillin.data.local.entity.TilEntity
-
 data class TilCreateState(
     val title: String = "",
     val learned: String = "",
