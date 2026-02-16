@@ -5,17 +5,18 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.tillin.data.local.entity.TilEntity
+import com.example.tillin.data.local.entity.WeeklyStatsEntity
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface WeeklyStatsDao {
-    @Query("SELECT * FROM weeklystats WHERE year = :year AND month = :month AND week = :week")
-    fun getWeeklyTil(year: Int, month: Int, week: Int): Flow<List<TilEntity>>
+    @Query("SELECT * FROM weeklystats WHERE weekOfDay = :weekOfDay")
+    suspend fun getWeeklyStats(weekOfDay: LocalDate): WeeklyStatsEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWeeklyTil(til: TilEntity): Long
+    suspend fun insertWeeklyStats(stats: WeeklyStatsEntity): Long
 
-    @Update
-    suspend fun updateWeeklyTil(til: TilEntity)
+    @Query("SELECT * FROM weeklystats ORDER BY weekOfDay DESC")
+    fun getAllWeeklyStats(): Flow<List<WeeklyStatsEntity>>
 }
