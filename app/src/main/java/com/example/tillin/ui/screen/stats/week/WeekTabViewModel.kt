@@ -3,12 +3,17 @@ package com.example.tillin.ui.screen.stats.week
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tillin.BuildConfig
 import com.example.tillin.data.local.entity.TilEntity
+import com.example.tillin.data.local.entity.WeeklyStatsEntity
+import com.example.tillin.data.remote.ChatRequest
+import com.example.tillin.data.remote.Message
 import com.example.tillin.data.remote.OpenAIService
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -40,6 +45,7 @@ class WeekTabViewModel @Inject constructor(
 
     fun saveWeekStats(
         til: TilEntity,
+        stats: WeeklyStatsEntity,
         onSuccess: () -> Unit = {},
         onError: (Exception) -> Unit = {}
     ) {
@@ -57,13 +63,44 @@ class WeekTabViewModel @Inject constructor(
 
                     [분석 요청]
                     {
-                        "emotion": "성취감/만족/평범/어려움/좌절 중 하나",
-                        "emotionScore": 1-5 사이 정수,
-                        "difficultyLevel": "쉬움/보통/어려움/매우 어려움 중 하나",
-                        "comment": "격려나 조언 한 문장 (20자 이내)"
+                        "weeklyComment": "이번 주 TIL 요약과 격려 (20자 이내)",
+                        "weeklyKeywords": "이번 주 TIL 주요 키워드 (3개)",
                     }
                     
                 """.trimIndent()
+
+                val response = openAIService.analyzeTil(
+                    auth = "Bearer ${BuildConfig.OPENAI_API_KEY}",
+                    request = ChatRequest(
+                        messages = listOf(
+                            Message("user", prompt)
+                        )
+                    )
+                )
+
+                val content = response.choices[0].message.content
+                val startIndex = content.indexOf("{")
+                val endIndex = content.lastIndexOf("}")
+
+                val clean = if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
+                    content.substring(startIndex, endIndex + 1)
+                } else {
+                    content.replace("```json", "").replace("```", "").trim()
+                }
+
+                val json = JSONObject(clean)
+
+                val finalStats = stats.copy(
+                    weeklyComment = json.getString("weeklyComment"),
+                    weeklyKeywords = json.getString("weeklyKeywords")
+                )
+
+                //repository.insertTil(finalStats)
+
+                _state.value = _state.value.copy(success = true)
+                onSuccess()
+                Log.e("TILLIN_DEBUG", "저장성공")
+
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
                     isLoading = false,

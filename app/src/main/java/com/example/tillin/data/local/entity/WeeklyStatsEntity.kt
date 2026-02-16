@@ -8,6 +8,7 @@ import java.time.LocalDate
 data class WeeklyStatsEntity (
     @PrimaryKey(autoGenerate = true)
     val weekOfDay: LocalDate,           // 시작 일
-    val topKeywords: String,            // 주간 키워드
+    val weeklyComment: String,          // 이번 주 요약
+    val weeklyKeywords: String,            // 주간 키워드
     val updateAt: Long? = null          // 수정 일시
 )
