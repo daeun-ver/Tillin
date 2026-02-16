@@ -51,7 +51,7 @@ fun WeekEmotionChart(
         border = BorderStroke(1.dp, Gray)
     ) {
         Column(
-            modifier = Modifier.padding(Dimens.Large)
+            modifier = Modifier.padding(Dimens.Small)
         ) {
             Text(text = "이번 주 감정 분석", style = AppTextStyle.BodySmall)
             Spacer(modifier = Modifier.height(Dimens.Tiny))
