@@ -11,8 +11,6 @@ import com.example.tillin.data.remote.OpenAIService
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import javax.inject.Inject
@@ -24,30 +22,6 @@ class TilCreateViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TilCreateState())
-    val state: StateFlow<TilCreateState> = _state.asStateFlow()
-
-    fun loadTil(id: Long) {
-        viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true, error = null, success = false)
-            try {
-                val til = repository.getTilById(id)
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    title = til?.title ?: "",
-                    learned = til?.learned ?: "",
-                    tomorrow = til?.tomorrow ?: "",
-                    error = null,
-                    success = true
-                )
-            } catch (e: Exception) {
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    error = e.message,
-                    success = false
-                )
-            }
-        }
-    }
 
     fun saveTil(
         til: TilEntity,
@@ -111,7 +85,7 @@ class TilCreateViewModel @Inject constructor(
 
                 _state.value = _state.value.copy(success = true)
                 onSuccess()
-                android.util.Log.e("TILLIN_DEBUG", "저장성공")
+                Log.e("TILLIN_DEBUG", "저장성공")
 
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
@@ -122,10 +96,9 @@ class TilCreateViewModel @Inject constructor(
                 onError(e)
                 if (e is retrofit2.HttpException) {
                     val errorBody = e.response()?.errorBody()?.string()
-                    android.util.Log.e("TILLIN_DEBUG", "OpenRouter 응답: $errorBody")
-                    Log.d("API_KEY_TEST", BuildConfig.OPENAI_API_KEY)
+                    Log.e("TILLIN_DEBUG", "OpenRouter 응답: $errorBody")
                 }
-                android.util.Log.e("TILLIN_DEBUG", "에러 발생!!! : ${e.message}")
+                Log.e("TILLIN_DEBUG", "에러 발생!!! : ${e.message}")
             }
         }
     }
