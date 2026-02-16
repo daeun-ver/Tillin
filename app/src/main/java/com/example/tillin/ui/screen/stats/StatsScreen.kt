@@ -16,6 +16,7 @@ import com.example.tillin.ui.screen.stats.component.StatsTabBar
 import com.example.tillin.ui.screen.stats.month.MonthTab
 import com.example.tillin.ui.screen.stats.week.WeekTab
 import com.example.tillin.ui.theme.Dimens
+import java.time.LocalDate
 
 enum class StatsTab(val label: String) {
     WEEK("주간"), MONTH("월간")
@@ -24,6 +25,7 @@ enum class StatsTab(val label: String) {
 @Composable
 fun StatsScreen() {
     var statsSelectedTab by remember() { mutableStateOf(StatsTab.WEEK) }
+    var todayDate by remember { mutableStateOf(LocalDate.now()) }
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             modifier = Modifier
@@ -35,7 +37,7 @@ fun StatsScreen() {
             ) {
 
                 when (statsSelectedTab) {
-                    StatsTab.WEEK -> WeekTab()
+                    StatsTab.WEEK -> WeekTab(date = todayDate, onDateChange = { todayDate = it })
                     StatsTab.MONTH -> MonthTab()
                 }
             }
