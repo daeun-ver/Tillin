@@ -37,11 +37,13 @@ fun WeekEmotionChart(
         .filter { it.emotionScore != null }
         .takeLast(7)
 
-    val chartEntryModel = entryModelOf(
-        weekTil.mapIndexed { index, til ->
-            entryOf(index.toFloat(), til.emotionScore?.toFloat() ?: 0f)
-        }
-    )
+
+    val entries = (0..6).map { index ->
+        val score = til.getOrNull(index)?.emotionScore?.toFloat() ?: 0f
+        entryOf(index.toFloat(), score)
+    }
+    val chartEntryModel = entryModelOf(entries)
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -53,6 +55,8 @@ fun WeekEmotionChart(
         Column(
             modifier = Modifier.padding(Dimens.Small)
         ) {
+            val days = arrayOf("일", "월", "화", "수", "목", "금", "토")
+
             Text(text = "이번 주 감정 분석", style = AppTextStyle.BodySmall)
             Spacer(modifier = Modifier.height(Dimens.Tiny))
             Chart(
@@ -81,7 +85,15 @@ fun WeekEmotionChart(
                     guideline = null
                 ),
                 bottomAxis = rememberBottomAxis(
-                    guideline = null
+                    valueFormatter = { value, _ ->
+                        days.getOrElse(value.toInt()) {""}
+                    },
+                    guideline = null,
+                    itemPlacer = AxisItemPlacer.Horizontal.default(
+                        spacing = 1,
+                        offset = 0,
+                        shiftExtremeTicks = false
+                    ),
                 )
             )
         }
