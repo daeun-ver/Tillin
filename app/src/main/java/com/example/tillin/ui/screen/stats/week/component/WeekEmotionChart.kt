@@ -27,19 +27,30 @@ import com.patrykandpatrick.vico.compose.chart.line.lineSpec
 import com.patrykandpatrick.vico.core.axis.AxisItemPlacer
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.core.entry.entryOf
+import java.time.Instant
+import java.time.ZoneId
 
 @Composable
 fun WeekEmotionChart(
     til: List<TilEntity>,
     modifier: Modifier = Modifier
 ) {
-    val weekTil = til
-        .filter { it.emotionScore != null }
-        .takeLast(7)
+    val zoneId = ZoneId.systemDefault()
+    val sorted = til.sortedBy { it.createdAt }
+    val weekMap = mutableMapOf<Int, Float>()
 
+    sorted.forEach { item ->
+        val date = Instant.ofEpochMilli(item.createdAt)
+            .atZone(zoneId)
+            .toLocalDate()
+
+        val dayIndex = date.dayOfWeek.value % 7
+
+        weekMap[dayIndex] = item.emotionScore?.toFloat() ?: 0f
+    }
 
     val entries = (0..6).map { index ->
-        val score = til.getOrNull(index)?.emotionScore?.toFloat() ?: 0f
+        val score = weekMap[index] ?: 0f
         entryOf(index.toFloat(), score)
     }
     val chartEntryModel = entryModelOf(entries)
@@ -62,7 +73,11 @@ fun WeekEmotionChart(
             Chart(
                 chart = lineChart(
                     lines = listOf(
-                        lineSpec(lineColor = PrimaryColor),
+                        lineSpec(lineColor = PrimaryColor)
+                    ),
+                    axisValuesOverrider = com.patrykandpatrick.vico.core.chart.values.AxisValuesOverrider.fixed(
+                        minY = 1f,
+                        maxY = 5f
                     )
                 ),
                 model = chartEntryModel,
@@ -81,7 +96,7 @@ fun WeekEmotionChart(
                         }
 
                     },
-                    itemPlacer = AxisItemPlacer.Vertical.default(maxItemCount = 6),
+                    itemPlacer = AxisItemPlacer.Vertical.default(maxItemCount = 5),
                     guideline = null
                 ),
                 bottomAxis = rememberBottomAxis(
