@@ -9,6 +9,7 @@ import com.example.tillin.data.local.entity.WeeklyStatsEntity
 import com.example.tillin.data.remote.ChatRequest
 import com.example.tillin.data.remote.Message
 import com.example.tillin.data.remote.OpenAIService
+import com.example.tillin.data.repository.StatsRepository
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeekTabViewModel @Inject constructor(
-    private val repository: TilRepository,
+    private val tilRepository: TilRepository,
+    private val statsRepository: StatsRepository,
     private val openAIService: OpenAIService
 ) : ViewModel() {
     private val _state = MutableStateFlow(WeekTabState())
@@ -35,8 +37,26 @@ class WeekTabViewModel @Inject constructor(
             val range = getWeekRange(date)
             val sunday = range.first()
             val saturday = range.last()
+            val isCurrentWeek = range.contains(LocalDate.now())
 
-            val weeklyTil = repository.getTilsForStats(startTime = sunday, endTime = saturday)
+            val existingStats = statsRepository.getWeeklyStats(sunday)
+
+            if (existingStats != null && !isCurrentWeek) {
+                //지난주면 로드
+                _state.value = _state.value.copy(
+                    weeklyStats = existingStats,
+                    isLoading = false
+                )
+            } else {
+                //이번주면 갱신
+                tilRepository.getTilsForStats(startTime = sunday, endTime = saturday)
+                    .collect { tilList ->
+                        if (tilList.isNotEmpty()) {
+                            saveWeekStats(til = tilList, startDay = sunday)
+                        }
+
+                    }
+            }
 
         } catch (e: Exception) {
             Log.d("loadWeekTil", "오류 발생 : ${e.message}")
@@ -44,29 +64,29 @@ class WeekTabViewModel @Inject constructor(
     }
 
     fun saveWeekStats(
-        til: TilEntity,
-        stats: WeeklyStatsEntity,
+        til: List<TilEntity>,
+        startDay: LocalDate,
         onSuccess: () -> Unit = {},
         onError: (Exception) -> Unit = {}
     ) {
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
+                val weeklyData = til.joinToString("\n\n") {
+                    "날짜: ${it.createdAt}, 제목: ${it.title}, 내용: ${it.learned}"
+                }
+
                 val prompt = """
                     당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용들을 분석해 JSON으로 응답해 주세요.
                     
                     [TIL 내용]
-                    제목: ${til.title}
-                    오늘 배운 것: ${til.learned}
-                    어려웠던 점: ${til.difficulty ?: "없음"}
-                    내일 할 일: ${til.tomorrow ?: "없음"}
+                    $weeklyData
 
                     [분석 요청]
                     {
                         "weeklyComment": "이번 주 TIL 요약과 격려 (20자 이내)",
                         "weeklyKeywords": "이번 주 TIL 주요 키워드 (3개)",
                     }
-                    
                 """.trimIndent()
 
                 val response = openAIService.analyzeTil(
@@ -90,14 +110,19 @@ class WeekTabViewModel @Inject constructor(
 
                 val json = JSONObject(clean)
 
-                val finalStats = stats.copy(
+                val finalStats = WeeklyStatsEntity(
+                    weekOfDay = startDay,
                     weeklyComment = json.getString("weeklyComment"),
                     weeklyKeywords = json.getString("weeklyKeywords")
                 )
 
-                //repository.insertTil(finalStats)
+                statsRepository.insertWeeklyStats(finalStats)
 
-                _state.value = _state.value.copy(success = true)
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    success = true,
+                    weeklyStats = finalStats
+                )
                 onSuccess()
                 Log.e("TILLIN_DEBUG", "저장성공")
 
