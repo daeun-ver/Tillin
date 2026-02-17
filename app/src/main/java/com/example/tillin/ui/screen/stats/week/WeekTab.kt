@@ -45,8 +45,6 @@ fun WeekTab(
     val viewModel: WeekTabViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
 
-    Text(text = state.toString())
-
     LaunchedEffect(date) {
         viewModel.loadWeekStats(date)
     }
