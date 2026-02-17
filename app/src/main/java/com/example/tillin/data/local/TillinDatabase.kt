@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import com.example.tillin.data.local.entity.MonthlyStatsEntity
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.data.local.entity.WeeklyStatsEntity
@@ -14,7 +13,6 @@ import com.example.tillin.data.local.entity.WeeklyStatsEntity
     version = 1,
     exportSchema = false
 )
-@TypeConverters(DateConverter::class)
 abstract class TillinDatabase : RoomDatabase() {
     abstract fun tilDao(): TilDao
     abstract fun statsDao(): StatsDao
