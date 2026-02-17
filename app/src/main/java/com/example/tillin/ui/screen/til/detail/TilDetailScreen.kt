@@ -30,9 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -61,11 +58,12 @@ fun TilDetailScreen(
 
     var emotion = state?.emotion
     var difficultyLevel = state?.difficultyLevel
-    var comment by remember { mutableStateOf(state?.comment.orEmpty()) }
-    var title by remember { mutableStateOf(state?.title.orEmpty()) }
-    var learned by remember { mutableStateOf(state?.learned.orEmpty()) }
-    var difficulty by remember { mutableStateOf(state?.difficulty.orEmpty()) }
-    var tomorrow by remember { mutableStateOf(state?.tomorrow.orEmpty()) }
+
+    val comment = state?.comment.orEmpty()
+    val title = state?.title.orEmpty()
+    val learned = state?.learned.orEmpty()
+    val difficulty = state?.difficulty.orEmpty()
+    val tomorrow = state?.tomorrow.orEmpty()
 
     Scaffold(
         topBar = {
