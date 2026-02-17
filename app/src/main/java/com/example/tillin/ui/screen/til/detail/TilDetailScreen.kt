@@ -50,27 +50,23 @@ import com.example.tillin.ui.theme.White
 @Composable
 fun TilDetailScreen(
     tilId: Long,
-    onBack: () -> Unit,
-    editTil: TilEntity? = null,
-    viewModel: TilDetailViewModel = hiltViewModel()
+    onBack: () -> Unit
 ) {
     val scrollState = rememberScrollState()
-
-    val tilFromDb by viewModel.state.collectAsState()
+    val viewModel: TilDetailViewModel = hiltViewModel()
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(tilId) {
         viewModel.loadTil(tilId)
     }
 
-    val til = tilFromDb ?: editTil ?: return
-
-    var emotion = til.emotion
-    var difficultyLevel = til.difficultyLevel
-    var comment by remember { mutableStateOf(til.comment.orEmpty()) }
-    var title by remember { mutableStateOf(til.title.orEmpty()) }
-    var learned by remember { mutableStateOf(til.learned.orEmpty()) }
-    var difficulty by remember { mutableStateOf(til.difficulty.orEmpty()) }
-    var tomorrow by remember { mutableStateOf(til.tomorrow.orEmpty()) }
+    var emotion = state?.emotion
+    var difficultyLevel = state?.difficultyLevel
+    var comment by remember { mutableStateOf(state?.comment.orEmpty()) }
+    var title by remember { mutableStateOf(state?.title.orEmpty()) }
+    var learned by remember { mutableStateOf(state?.learned.orEmpty()) }
+    var difficulty by remember { mutableStateOf(state?.difficulty.orEmpty()) }
+    var tomorrow by remember { mutableStateOf(state?.tomorrow.orEmpty()) }
 
     Scaffold(
         topBar = {
