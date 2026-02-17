@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 @Entity(tableName = "weeklystats")
 data class WeeklyStatsEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val weekOfDay: LocalDate,           // 시작 일
     val weeklySummary: String,          // 이번 주 요약
     val weeklyKeywords: String,         // 주간 키워드

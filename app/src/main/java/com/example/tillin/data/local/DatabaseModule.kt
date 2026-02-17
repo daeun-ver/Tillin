@@ -38,6 +38,12 @@ object DatabaseModule {
 
     @Provides
     @Singleton
+    fun provideWeeklyStats(database: TillinDatabase): StatsDao {
+        return database.statsDao()
+    }
+
+    @Provides
+    @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://openrouter.ai/api/")
