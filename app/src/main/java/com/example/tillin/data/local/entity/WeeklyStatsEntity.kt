@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 @Entity(tableName = "weeklystats")
-data class WeeklyStatsEntity (
+data class WeeklyStatsEntity(
     @PrimaryKey(autoGenerate = true)
     val weekOfDay: LocalDate,           // 시작 일
-    val weeklyComment: String,          // 이번 주 요약
+    val weeklySummary: String,          // 이번 주 요약
     val weeklyKeywords: String,         // 주간 키워드
     val updateAt: Long? = null          // 수정 일시
 )

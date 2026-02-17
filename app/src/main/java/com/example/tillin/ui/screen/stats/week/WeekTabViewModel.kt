@@ -13,6 +13,8 @@ import com.example.tillin.data.repository.StatsRepository
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.time.LocalDate
@@ -25,6 +27,7 @@ class WeekTabViewModel @Inject constructor(
     private val openAIService: OpenAIService
 ) : ViewModel() {
     private val _state = MutableStateFlow(WeekTabState())
+    val state: StateFlow<WeekTabState> = _state.asStateFlow()
 
     fun getWeekRange(date: LocalDate): List<LocalDate> {
         val dayOfWeek = date.dayOfWeek.value % 7
@@ -112,7 +115,7 @@ class WeekTabViewModel @Inject constructor(
 
                 val finalStats = WeeklyStatsEntity(
                     weekOfDay = startDay,
-                    weeklyComment = json.getString("weeklyComment"),
+                    weeklySummary = json.getString("weeklySummary"),
                     weeklyKeywords = json.getString("weeklyKeywords")
                 )
 
