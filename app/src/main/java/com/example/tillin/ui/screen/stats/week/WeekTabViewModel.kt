@@ -55,23 +55,19 @@ class WeekTabViewModel @Inject constructor(
 
             val existingStats = statsRepository.getWeeklyStats(sundayMillis)
 
+            tilRepository.getTilsForStats(sundayMillis, saturdayMillis).collect { tilList ->
+                _state.value = _state.value.copy(til = tilList)
 
-            if (existingStats != null && !isCurrentWeek) {
-                //지난주면 로드
-                _state.value = _state.value.copy(
-                    weeklyStats = existingStats,
-                    isLoading = false
-                )
-            } else {
-                //이번주면 갱신
-                tilRepository.getTilsForStats(startTime = sundayMillis, endTime = saturdayMillis)
-                    .collect { tilList ->
-                        _state.value = _state.value.copy(til = tilList)
-                        if (tilList.isNotEmpty()) {
-                            saveWeekStats(til = tilList, startDay = sunday)
-                        }
-
-                    }
+                if (existingStats != null && !isCurrentWeek) {
+                    //지난주면 로드
+                    _state.value = _state.value.copy(weeklyStats = existingStats, isLoading = false)
+                } else if (tilList.isNotEmpty()) {
+                    //이번주면 갱신
+                    saveWeekStats(til = tilList, startDay = sunday)
+                } else {
+                    //null
+                    _state.value = _state.value.copy(weeklyStats = null, isLoading = false)
+                }
             }
 
         } catch (e: Exception) {
@@ -98,7 +94,7 @@ class WeekTabViewModel @Inject constructor(
                 }
 
                 val prompt = """
-                    당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용들을 분석해 JSON으로 응답해 주세요.
+                    당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용들을 분석해 JSON으로 응답해 주세요. 값은 모두 문자열(String)로 작성하세요. 객체나 언어코드로 감싸지 마세요.
                     
                     [TIL 내용]
                     $weeklyData
