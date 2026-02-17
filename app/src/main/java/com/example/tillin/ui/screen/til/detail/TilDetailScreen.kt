@@ -37,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.screen.til.component.DifficultyTag
 import com.example.tillin.ui.screen.til.component.EmotionTag
 import com.example.tillin.ui.theme.AppTextStyle
