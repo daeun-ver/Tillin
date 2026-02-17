@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.time.LocalDate
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,7 +43,18 @@ class WeekTabViewModel @Inject constructor(
             val saturday = range.last()
             val isCurrentWeek = range.contains(LocalDate.now())
 
-            val existingStats = statsRepository.getWeeklyStats(sunday)
+            val sundayMillis = sunday
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli()
+            val saturdayMillis = saturday
+                .plusDays(1)
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli() - 1
+
+            val existingStats = statsRepository.getWeeklyStats(sundayMillis)
+
 
             if (existingStats != null && !isCurrentWeek) {
                 //지난주면 로드
@@ -52,8 +64,9 @@ class WeekTabViewModel @Inject constructor(
                 )
             } else {
                 //이번주면 갱신
-                tilRepository.getTilsForStats(startTime = sunday, endTime = saturday)
+                tilRepository.getTilsForStats(startTime = sundayMillis, endTime = saturdayMillis)
                     .collect { tilList ->
+                        _state.value = _state.value.copy(til = tilList)
                         if (tilList.isNotEmpty()) {
                             saveWeekStats(til = tilList, startDay = sunday)
                         }
@@ -75,6 +88,11 @@ class WeekTabViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
+                val startDayMillis = startDay
+                    .atStartOfDay(ZoneId.systemDefault())
+                    .toInstant()
+                    .toEpochMilli()
+
                 val weeklyData = til.joinToString("\n\n") {
                     "날짜: ${it.createdAt}, 제목: ${it.title}, 내용: ${it.learned}"
                 }
@@ -87,7 +105,7 @@ class WeekTabViewModel @Inject constructor(
 
                     [분석 요청]
                     {
-                        "weeklyComment": "이번 주 TIL 요약과 격려 (20자 이내)",
+                        "weeklySummary": "이번 주 TIL 요약과 격려 (20자 이내)",
                         "weeklyKeywords": "이번 주 TIL 주요 키워드 (3개)",
                     }
                 """.trimIndent()
@@ -114,7 +132,7 @@ class WeekTabViewModel @Inject constructor(
                 val json = JSONObject(clean)
 
                 val finalStats = WeeklyStatsEntity(
-                    weekOfDay = startDay,
+                    weekOfDay = startDayMillis,
                     weeklySummary = json.getString("weeklySummary"),
                     weeklyKeywords = json.getString("weeklyKeywords")
                 )

@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.ui.screen.stats.component.KeywordCard
 import com.example.tillin.ui.screen.stats.week.component.WeekEmotionChart
@@ -45,6 +44,8 @@ fun WeekTab(
 ) {
     val viewModel: WeekTabViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
+
+    Text(text = state.toString())
 
     LaunchedEffect(date) {
         viewModel.loadWeekStats(date)
