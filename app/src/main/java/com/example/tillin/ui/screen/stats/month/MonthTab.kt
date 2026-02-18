@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.screen.stats.component.KeywordCard
+import com.example.tillin.ui.screen.stats.month.component.AverageDifficultyCard
+import com.example.tillin.ui.screen.stats.month.component.EmotionInsightCard
 import com.example.tillin.ui.screen.stats.month.component.MonthAdviceCard
 import com.example.tillin.ui.screen.stats.month.component.MonthEmotionChart
 import com.example.tillin.ui.screen.stats.month.component.MonthGrowthCard
@@ -64,7 +66,7 @@ fun MonthTab(
                     modifier = Modifier.align(Alignment.CenterStart)
                 ) {
                     IconButton(onClick = {
-                        onDateChange(date.minus(Period.ofDays(7)))
+                        onDateChange(date.minus(Period.ofMonths(1)))
                     }) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
@@ -83,7 +85,7 @@ fun MonthTab(
                     modifier = Modifier.align(Alignment.CenterEnd)
                 ) {
                     IconButton(onClick = {
-                        onDateChange(date.plus(Period.ofDays(7)))
+                        onDateChange(date.plus(Period.ofMonths(1)))
                     }) {
                         Icon(
                             Icons.Default.ArrowForward,
@@ -98,6 +100,13 @@ fun MonthTab(
             MonthSummaryCard("adfs")
             MonthEmotionChart(dummy)
             KeywordCard("dsaf")
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                AverageDifficultyCard(difficulty = "어려움", modifier = Modifier.weight(1f))
+                EmotionInsightCard(emotion = "성취감", modifier = Modifier.weight(1f))
+            }
             MonthGrowthCard("fad")
             MonthAdviceCard("dfsaasdf")
         }
