@@ -38,7 +38,7 @@ fun StatsScreen() {
 
                 when (statsSelectedTab) {
                     StatsTab.WEEK -> WeekTab(date = todayDate, onDateChange = { todayDate = it })
-                    StatsTab.MONTH -> MonthTab()
+                    StatsTab.MONTH -> MonthTab(date = todayDate, onDateChange = { todayDate = it })
                 }
             }
         }
