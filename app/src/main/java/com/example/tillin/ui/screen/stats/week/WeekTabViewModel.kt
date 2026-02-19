@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.time.LocalDate
@@ -55,20 +56,20 @@ class WeekTabViewModel @Inject constructor(
 
             val existingStats = statsRepository.getWeeklyStats(sundayMillis)
 
-            tilRepository.getTilsForStats(sundayMillis, saturdayMillis).collect { tilList ->
-                _state.value = _state.value.copy(til = tilList)
+            val tilList = tilRepository.getTilsForStats(sundayMillis, saturdayMillis).first()
+            _state.value = _state.value.copy(til = tilList)
 
-                if (existingStats != null && !isCurrentWeek) {
-                    //지난주면 로드
-                    _state.value = _state.value.copy(weeklyStats = existingStats, isLoading = false)
-                } else if (tilList.isNotEmpty()) {
-                    //이번주면 갱신
-                    saveWeekStats(til = tilList, startDay = sunday)
-                } else {
-                    //null
-                    _state.value = _state.value.copy(weeklyStats = null, isLoading = false)
-                }
+            if (existingStats != null && !isCurrentWeek) {
+                //지난주면 로드
+                _state.value = _state.value.copy(weeklyStats = existingStats, isLoading = false)
+            } else if (tilList.isNotEmpty()) {
+                //이번주면 갱신
+                saveWeekStats(til = tilList, startDay = sunday)
+            } else {
+                //null
+                _state.value = _state.value.copy(weeklyStats = null, isLoading = false)
             }
+
 
         } catch (e: Exception) {
             Log.d("loadWeekTil", "오류 발생 : ${e.message}")
