@@ -92,7 +92,7 @@ suspend fun analyzeWeeklyStats(
     tils: List<TilEntity>
 ): WeeklyResult = withContext(Dispatchers.IO) {
     val weeklyContent = tils.joinToString("\n")
-    { "- 제목: ${it.title}\n  배운 점: ${it.learned}\n  어려웠던 점: ${it.difficulty ?: "없음"}" }
+    { "제목: ${it.title}\n  배운 점: ${it.learned}\n  어려웠던 점: ${it.difficulty ?: "없음"}" }
 
     val prompt = """
         당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용들을 분석해 JSON으로 응답해 주세요.
@@ -108,7 +108,8 @@ suspend fun analyzeWeeklyStats(
         """.trimIndent()
 
     val request = ChatRequest(messages = listOf(Message("user", prompt)))
-    val response = apiService.analyzeTil(auth = "Bearer ${BuildConfig.OPENAI_API_KEY}", request = request)
+    val response =
+        apiService.analyzeTil(auth = "Bearer ${BuildConfig.OPENAI_API_KEY}", request = request)
 
     val content = response.choices[0].message.content
     val startIndex = content.indexOf("{")
@@ -140,7 +141,7 @@ suspend fun analyzeMonthlyStats(
     tils: List<TilEntity>
 ): MonthlyResult = withContext(Dispatchers.IO) {
     val monthlyContent = tils.joinToString("\n")
-    { "- 제목: ${it.title}\n  배운 점: ${it.learned}\n  어려웠던 점: ${it.difficulty ?: "없음"}" }
+    { "날짜: ${it.createdAt} 제목: ${it.title}\n  배운 점: ${it.learned}\n  어려웠던 점: ${it.difficulty ?: "없음"}" }
 
     val prompt = """
         당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용들을 분석해 JSON으로 응답해 주세요.
@@ -154,12 +155,15 @@ suspend fun analyzeMonthlyStats(
           "monthlyKeywords": "이번 달 가장 많이 학습한 키워드 3개",
           "growth": "지난달보다 성장한 점이나 인상 깊은 변화 (20자 이내)",
           "advice": "다음 달을 위한 짧은 조언 (20자 이내)",
-          "averageDifficulty": "전체적인 난이도 (쉬움/보통/어려움/매우 어려움 중 하나)"
+          "averageDifficulty": "전체적인 난이도 (쉬움/보통/어려움/매우 어려움 중 하나)",
+          "bestDay": "emotion 점수가 가장 높은 날 하루 (m월 dd일 형식)",
+          "worstDay": "emotion 점수가 가장 낮은 날 하루 (m월 dd일 형식)" 
         }
         """.trimIndent()
 
     val request = ChatRequest(messages = listOf(Message("user", prompt)))
-    val response = apiService.analyzeTil(auth = "Bearer ${BuildConfig.OPENAI_API_KEY}", request = request)
+    val response =
+        apiService.analyzeTil(auth = "Bearer ${BuildConfig.OPENAI_API_KEY}", request = request)
 
     val content = response.choices[0].message.content
     val startIndex = content.indexOf("{")
@@ -178,7 +182,9 @@ suspend fun analyzeMonthlyStats(
         monthlyKeywords = json.getString("monthlyKeywords"),
         growth = json.getString("growth"),
         advice = json.getString("advice"),
-        averageDifficulty = json.getString("averageDifficulty")
+        averageDifficulty = json.getString("averageDifficulty"),
+        bestDay = json.getString("bestDay"),
+        worstDay = json.getString("worstDay")
     )
 }
 
@@ -187,5 +193,7 @@ data class MonthlyResult(
     val monthlyKeywords: String,
     val growth: String,
     val advice: String,
-    val averageDifficulty: String
+    val averageDifficulty: String,
+    val bestDay: String,
+    val worstDay: String
 )
