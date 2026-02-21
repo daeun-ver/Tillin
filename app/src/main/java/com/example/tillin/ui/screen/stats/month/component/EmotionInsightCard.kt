@@ -44,7 +44,7 @@ fun EmotionInsightCard(
             //최고 날
             Row {
                 Text(
-                    text = EmotionToEmoji(bestDay),
+                    text = EmotionToEmoji("성취감"),
                     style = AppTextStyle.Body,
                     modifier = Modifier.padding(start = Dimens.Tiny)
                 )
@@ -61,7 +61,7 @@ fun EmotionInsightCard(
             //최저 날
             Row {
                 Text(
-                    text = EmotionToEmoji(worstDay),
+                    text = EmotionToEmoji("좌절"),
                     style = AppTextStyle.Body,
                     modifier = Modifier.padding(start = Dimens.Tiny)
                 )
