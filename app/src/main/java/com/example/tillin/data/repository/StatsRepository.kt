@@ -20,11 +20,7 @@ class StatsRepository @Inject constructor(
     private val tilDao: TilDao,
     private val apiService: OpenAIService
 ) {
-    fun getAllStats() = statsDao.getAllStats()
-
     //주간 통계
-    suspend fun getWeeklyStats(startTime: Long) = statsDao.getWeeklyStats(startTime)
-
     suspend fun getWeeklyDataForUI(sundayMillis: Long): WeeklyData {
         val saturdayMillis = sundayMillis + (7 * 24 * 60 * 60 * 1000L) - 1
 
@@ -33,7 +29,6 @@ class StatsRepository @Inject constructor(
         return WeeklyData(tils, stats)
     }
 
-    suspend fun insertWeeklyStats(stats: WeeklyStatsEntity) = statsDao.insertWeeklyStats(stats)
     suspend fun updateWeeklyStats(dateTimestamp: Long) {
         val date = Instant.ofEpochMilli(dateTimestamp).atZone(ZoneId.systemDefault()).toLocalDate()
 
@@ -65,8 +60,6 @@ class StatsRepository @Inject constructor(
     )
 
     //월간 통계
-    suspend fun getMonthlyStats(startTime: Long) = statsDao.getMonthlyStats(startTime)
-
     suspend fun getMonthlyDataForUI(monthMillis: Long): MonthlyData {
         val date = Instant.ofEpochMilli(monthMillis).atZone(ZoneId.systemDefault()).toLocalDate()
         val lastDay = date.with(TemporalAdjusters.lastDayOfMonth())
@@ -76,6 +69,7 @@ class StatsRepository @Inject constructor(
         val stats = statsDao.getMonthlyStats(monthMillis)
         return MonthlyData(tils, stats)
     }
+
     suspend fun insertMonthlyStats(stats: MonthlyStatsEntity) = statsDao.insertMonthlyStats(stats)
     suspend fun updateMonthlyStats(dateTimestamp: Long) {
         val date = Instant.ofEpochMilli(dateTimestamp).atZone(ZoneId.systemDefault()).toLocalDate()
