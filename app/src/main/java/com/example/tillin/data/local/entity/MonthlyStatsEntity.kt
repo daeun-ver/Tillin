@@ -12,7 +12,7 @@ data class MonthlyStatsEntity(
     val growth: String,                 // 성장 포인트
     val advice: String,                 // 다음 달 추천
     val averageDifficulty: String,      // 평균 난이도
-    val bestDay: Long? = null,          // 제일 즐거웠던 날
-    val worstDay: Long? = null,         // 제일 힘들었던 날
+    val bestDay: String? = "",          // 제일 즐거웠던 날
+    val worstDay: String? = "",         // 제일 힘들었던 날
     val updateAt: Long? = null          // 수정 일시
 )
