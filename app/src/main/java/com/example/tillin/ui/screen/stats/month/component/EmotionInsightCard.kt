@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -23,7 +22,8 @@ import com.example.tillin.ui.theme.White
 
 @Composable
 fun EmotionInsightCard(
-    emotion: String,
+    bestDay: String,
+    worstDay: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -44,13 +44,13 @@ fun EmotionInsightCard(
             //최고 날
             Row {
                 Text(
-                    text = EmotionToEmoji(emotion),
+                    text = EmotionToEmoji(bestDay),
                     style = AppTextStyle.Body,
                     modifier = Modifier.padding(start = Dimens.Tiny)
                 )
                 Spacer(modifier = Modifier.width(Dimens.Nano))
                 Text(
-                    text = emotion,
+                    text = bestDay,
                     style = AppTextStyle.Body,
                     modifier = Modifier.padding(start = Dimens.Tiny)
                 )
@@ -61,13 +61,13 @@ fun EmotionInsightCard(
             //최저 날
             Row {
                 Text(
-                    text = EmotionToEmoji(emotion),
+                    text = EmotionToEmoji(worstDay),
                     style = AppTextStyle.Body,
                     modifier = Modifier.padding(start = Dimens.Tiny)
                 )
                 Spacer(modifier = Modifier.width(Dimens.Nano))
                 Text(
-                    text = emotion,
+                    text = worstDay,
                     style = AppTextStyle.Body,
                     modifier = Modifier.padding(start = Dimens.Tiny)
                 )

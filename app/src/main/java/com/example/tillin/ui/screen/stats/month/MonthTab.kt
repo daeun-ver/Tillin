@@ -17,10 +17,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.tillin.data.local.entity.TilEntity
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.ui.screen.stats.component.KeywordCard
 import com.example.tillin.ui.screen.stats.month.component.AverageDifficultyCard
 import com.example.tillin.ui.screen.stats.month.component.EmotionInsightCard
@@ -41,21 +44,34 @@ fun MonthTab(
     onDateChange: (LocalDate) -> Unit
 ) {
     val scrollState = rememberScrollState()
+    val viewModel: MonthTabViewModel = hiltViewModel()
+    val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(date) {
+        viewModel.loadMonthStats(date)
+    }
+
+    val summary = state.monthlyStats?.monthlySummary ?: "데이터가 부족 합니다."
+    val keyword = state.monthlyStats?.monthlyKeywords ?: "데이터가 부족 합니다."
+
+    val bestDay = state.monthlyStats?.bestDay ?: "0월 00일"
+    val worstDay = state.monthlyStats?.worstDay ?: "0월 00일"
+    val growth = state.monthlyStats?.growth ?: "데이터가 부족 합니다."
+    val advice = state.monthlyStats?.advice ?: "데이터가 부족 합니다."
+
 
     val year = date.year
     val month = date.monthValue
 
-    val dummy = listOf(TilEntity(title = "1", id = 1234, learned = "ㅁㄴㅇㄹ", emotion = "das", emotionScore = 5, createdAt = 1717171200000L),
-        TilEntity(title = "2", id = 2345, learned = "ㅁㄴㅇㄹ", emotion = "das", emotionScore = 3, createdAt = 1717141200000L ),
-        TilEntity(title = "3", id = 3456, learned = "ㅁㄴㅇㄹ", emotion = "das", emotionScore = 1, createdAt = 1717084800000L ),
-    )
     Scaffold(
         modifier = Modifier,
         containerColor = PrimaryBackground,
     ) { padding ->
-        Column(modifier = Modifier.fillMaxSize()
-            .padding(padding)
-            .verticalScroll(scrollState)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .verticalScroll(scrollState)
         ) {
             Box(
                 modifier = Modifier
@@ -97,18 +113,21 @@ fun MonthTab(
                 }
             }
 
-            MonthSummaryCard("adfs")
-            MonthEmotionChart(dummy)
-            KeywordCard("dsaf")
+            MonthSummaryCard(summary)
+            MonthEmotionChart(state.til)
+            KeywordCard(keyword)
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 AverageDifficultyCard(difficulty = "어려움", modifier = Modifier.weight(1f))
-                EmotionInsightCard(emotion = "성취감", modifier = Modifier.weight(1f))
+                EmotionInsightCard(
+                    bestDay = bestDay,
+                    worstDay = worstDay,
+                    modifier = Modifier.weight(1f)
+                )
             }
-            MonthGrowthCard("fad")
-            MonthAdviceCard("dfsaasdf")
+            MonthGrowthCard(growth)
+            MonthAdviceCard(advice)
         }
     }
 }
