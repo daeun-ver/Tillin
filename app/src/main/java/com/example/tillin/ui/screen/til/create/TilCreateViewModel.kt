@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tillin.data.local.entity.TilEntity
-import com.example.tillin.data.remote.OpenAIService
-import com.example.tillin.data.remote.analyzeTil
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,8 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TilCreateViewModel @Inject constructor(
-    private val repository: TilRepository,
-    private val openAIService: OpenAIService
+    private val tilRepository: TilRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TilCreateState())
@@ -28,12 +25,10 @@ class TilCreateViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
-                val finalTil = analyzeTil(openAIService, til)
-
                 if (til.id == 0L) {
-                    repository.insertTil(finalTil)
+                    tilRepository.insertTil(til)
                 } else {
-                    repository.updateTil(finalTil)
+                    tilRepository.updateTil(til)
                 }
 
                 _state.value = _state.value.copy(success = true)
