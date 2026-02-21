@@ -52,16 +52,12 @@ class WeekTabViewModel @Inject constructor(
                 val timestamp = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
                 statsRepository.updateWeeklyStats(timestamp)
-
                 loadWeekStats(date)
 
-                Log.e("TILLIN_DEBUG", "통계 저장 성공")
+                onSuccess()
+                Log.e("TILLIN_DEBUG", "주간 통계 저장 성공")
             } catch (e: Exception) {
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    error = e.message,
-                    success = false
-                )
+                _state.value = _state.value.copy(isLoading = false, error = e.message, success = false)
                 onError(e)
             }
         }
