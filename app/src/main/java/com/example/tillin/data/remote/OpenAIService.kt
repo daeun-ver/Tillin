@@ -46,6 +46,7 @@ suspend fun analyzeTil(
 
     val prompt = """
         당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용을 분석해 JSON으로 응답해 주세요.
+        존댓말을 사용하며, 완결된 문장으로 끝맺음 해야 합니다.
 
         [TIL 내용]
         제목: ${til.title}
@@ -96,6 +97,7 @@ suspend fun analyzeWeeklyStats(
 
     val prompt = """
         당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용들을 분석해 JSON으로 응답해 주세요.
+        존댓말을 사용하며, 완결된 문장으로 끝맺음 해야 합니다.
 
         [TIL 내용들]
         $weeklyContent
@@ -145,6 +147,7 @@ suspend fun analyzeMonthlyStats(
 
     val prompt = """
         당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용들을 분석해 JSON으로 응답해 주세요.
+        존댓말을 사용하며, 완결된 문장으로 끝맺음 해야 합니다.
 
         [TIL 내용들]
         $monthlyContent
@@ -155,9 +158,8 @@ suspend fun analyzeMonthlyStats(
           "monthlyKeywords": "이번 달 가장 많이 학습한 키워드 3개 (키워드는 대괄호나 따옴표 없이, 쉼표로만 구분해서 나열)",
           "growth": "지난달보다 성장한 점이나 인상 깊은 변화 (20자 이내)",
           "advice": "다음 달을 위한 짧은 조언 (20자 이내)",
-          "averageDifficulty": "전체적인 난이도 (쉬움/보통/어려움/매우 어려움 중 하나)",
-          "bestDay": "emotion 점수가 가장 높은 날 하루 (m월 dd일 형식)",
-          "worstDay": "emotion 점수가 가장 낮은 날 하루 (m월 dd일 형식)" 
+          "bestDay": "emotion 점수가 가장 높은 날 하루 (YYYY-MM-DD' 형식의 문자열)",
+          "worstDay": "emotion 점수가 가장 낮은 날 하루 (YYYY-MM-DD' 형식의 문자열)" 
         }
         """.trimIndent()
 
@@ -182,7 +184,6 @@ suspend fun analyzeMonthlyStats(
         monthlyKeywords = json.getString("monthlyKeywords"),
         growth = json.getString("growth"),
         advice = json.getString("advice"),
-        averageDifficulty = json.getString("averageDifficulty"),
         bestDay = json.getString("bestDay"),
         worstDay = json.getString("worstDay")
     )
@@ -193,7 +194,6 @@ data class MonthlyResult(
     val monthlyKeywords: String,
     val growth: String,
     val advice: String,
-    val averageDifficulty: String,
     val bestDay: String,
     val worstDay: String
 )
