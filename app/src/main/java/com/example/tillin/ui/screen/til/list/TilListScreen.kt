@@ -26,8 +26,6 @@ import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.PrimaryBackground
 import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
-import java.text.SimpleDateFormat
-import java.util.Date
 
 @Composable
 fun TilListScreen(
@@ -36,8 +34,7 @@ fun TilListScreen(
 ) {
     val viewModel: TilListViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
-    val timeFormat = SimpleDateFormat("yyyy-MM-dd")
-    val tilGroup = state.tils.groupBy { timeFormat.format(Date(it.createdAt)) }
+    val tilGroup = state.tils.groupBy { it.createdAt.toString() }
 
     Scaffold(
         modifier = Modifier,

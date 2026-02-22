@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.tillin.data.local.entity.TilEntity
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface TilDao {
@@ -27,6 +28,6 @@ interface TilDao {
     suspend fun deleteTil(til: TilEntity)
 
     // 통계용 (과거순)
-    @Query("SELECT * FROM tils WHERE createdAt >= :startTime AND createdAt < :endTime ORDER BY createdAt ASC")
-    fun getTilsForStats(startTime: Long, endTime: Long): Flow<List<TilEntity>>
+    @Query(" SELECT * FROM tils WHERE createdAt >= :startTime AND createdAt < :endTime ORDER BY createdAt ASC")
+    fun getTilsForStats(startTime: LocalDate, endTime: LocalDate): Flow<List<TilEntity>>
 }

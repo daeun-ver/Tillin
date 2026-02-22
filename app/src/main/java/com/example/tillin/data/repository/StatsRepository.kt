@@ -10,8 +10,8 @@ import com.example.tillin.data.remote.analyzeMonthlyStats
 import com.example.tillin.data.remote.analyzeWeeklyStats
 import kotlinx.coroutines.flow.first
 import java.time.DayOfWeek
-import java.time.Instant
-import java.time.ZoneId
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters
 import javax.inject.Inject
 
@@ -20,32 +20,29 @@ class StatsRepository @Inject constructor(
     private val tilDao: TilDao,
     private val apiService: OpenAIService
 ) {
-    //주간 통계
-    suspend fun getWeeklyDataForUI(sundayMillis: Long): WeeklyData {
-        val saturdayMillis = sundayMillis + (7 * 24 * 60 * 60 * 1000L) - 1
+    private val formatter = DateTimeFormatter.ISO_LOCAL_DATE
 
-        val tils = tilDao.getTilsForStats(sundayMillis, saturdayMillis).first()
-        val stats = statsDao.getWeeklyStats(sundayMillis)
+    //주간 통계
+    suspend fun getWeeklyDataForUI(date: LocalDate): WeeklyData {
+        val sunday = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY))
+        val saturday = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY))
+
+        val tils = tilDao.getTilsForStats(sunday, saturday).first()
+        val stats = statsDao.getWeeklyStats(sunday)
         return WeeklyData(tils, stats)
     }
 
-    suspend fun updateWeeklyStats(dateTimestamp: Long) {
-        val date = Instant.ofEpochMilli(dateTimestamp).atZone(ZoneId.systemDefault()).toLocalDate()
+    suspend fun updateWeeklyStats(date: LocalDate) {
+        val sunday = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY))
+        val saturday = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY))
 
-        val monday = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
-        val startMillis = monday.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-        val sunday = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
-        val endMillis =
-            sunday.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-        val weeklyTils = tilDao.getTilsForStats(startMillis, endMillis).first()
+        val weeklyTils = tilDao.getTilsForStats(sunday, saturday).first()
 
         if (weeklyTils.isNotEmpty()) {
             val summaryResult = analyzeWeeklyStats(apiService, weeklyTils)
 
             val newWeeklyStats = WeeklyStatsEntity(
-                weekOfDay = startMillis,
+                weekOfDay = sunday,
                 weeklySummary = summaryResult.weeklySummary,
                 weeklyKeywords = summaryResult.weeklyKeywords
             )
@@ -60,39 +57,30 @@ class StatsRepository @Inject constructor(
     )
 
     //월간 통계
-    suspend fun getMonthlyDataForUI(monthMillis: Long): MonthlyData {
-        val date = Instant.ofEpochMilli(monthMillis).atZone(ZoneId.systemDefault()).toLocalDate()
+    suspend fun getMonthlyDataForUI(date: LocalDate): MonthlyData {
+        val firstDay = date.with(TemporalAdjusters.firstDayOfMonth())
         val lastDay = date.with(TemporalAdjusters.lastDayOfMonth())
-        val endMillis = lastDay.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-        val tils = tilDao.getTilsForStats(monthMillis, endMillis).first()
-        val stats = statsDao.getMonthlyStats(monthMillis)
+        val tils = tilDao.getTilsForStats(firstDay, lastDay).first()
+        val stats = statsDao.getMonthlyStats(firstDay)
         return MonthlyData(tils, stats)
     }
 
-    suspend fun insertMonthlyStats(stats: MonthlyStatsEntity) = statsDao.insertMonthlyStats(stats)
-    suspend fun updateMonthlyStats(dateTimestamp: Long) {
-        val date = Instant.ofEpochMilli(dateTimestamp).atZone(ZoneId.systemDefault()).toLocalDate()
-
+    suspend fun updateMonthlyStats(date: LocalDate) {
         val firstDay = date.with(TemporalAdjusters.firstDayOfMonth())
-        val startMillis = firstDay.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
         val lastDay = date.with(TemporalAdjusters.lastDayOfMonth())
-        val endMillis =
-            lastDay.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-        val monthlyTils = tilDao.getTilsForStats(startMillis, endMillis).first()
+        val monthlyTils = tilDao.getTilsForStats(firstDay, lastDay).first()
 
         if (monthlyTils.isNotEmpty()) {
             val summaryResult = analyzeMonthlyStats(apiService, monthlyTils)
 
             val newMonthlyStats = MonthlyStatsEntity(
-                monthOfDay = startMillis,
+                monthOfDay = firstDay,
                 monthlySummary = summaryResult.monthlySummary,
                 monthlyKeywords = summaryResult.monthlyKeywords,
                 growth = summaryResult.growth,
                 advice = summaryResult.advice,
-                averageDifficulty = summaryResult.averageDifficulty,
                 bestDay = summaryResult.bestDay,
                 worstDay = summaryResult.worstDay
             )

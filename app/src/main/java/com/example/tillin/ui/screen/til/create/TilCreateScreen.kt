@@ -40,6 +40,7 @@ import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.Gray
 import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,7 +85,8 @@ fun TilCreateScreen(
                                     difficulty = difficulty,
                                     tomorrow = tomorrow,
                                     emotion = null,
-                                    comment = null
+                                    comment = null,
+                                    createdAt = editTil?.createdAt ?: LocalDate.now()
                                 )
                                 viewModel.saveTil(
                                     onSuccess = {

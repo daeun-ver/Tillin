@@ -8,6 +8,7 @@ import androidx.room.Update
 import com.example.tillin.data.local.entity.MonthlyStatsEntity
 import com.example.tillin.data.local.entity.WeeklyStatsEntity
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface StatsDao {
@@ -16,15 +17,15 @@ interface StatsDao {
 
     //주간 통계
     @Query("SELECT * FROM weeklystats WHERE weekOfDay = :startDate")
-    suspend fun getWeeklyStats(startDate: Long): WeeklyStatsEntity?
+    suspend fun getWeeklyStats(startDate: LocalDate): WeeklyStatsEntity?
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeeklyStats(stats: WeeklyStatsEntity)
     @Update
     suspend fun updateWeeklyStats(stats: WeeklyStatsEntity)
 
     //월간 통계
-    @Query("SELECT * FROM monthlystats WHERE monthOfDay = :monthDate")
-    suspend fun getMonthlyStats(monthDate: Long): MonthlyStatsEntity?
+    @Query("SELECT * FROM monthlystats WHERE monthOfDay = :startDate")
+    suspend fun getMonthlyStats(startDate: LocalDate): MonthlyStatsEntity?
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMonthlyStats(stats: MonthlyStatsEntity)
     @Update

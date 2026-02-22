@@ -2,6 +2,7 @@ package com.example.tillin.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 @Entity(tableName = "tils")
 data class TilEntity(
@@ -19,6 +20,6 @@ data class TilEntity(
     val difficultyLevel: String? = null,  // 난이도 (쉬움, 보통, 어려움, 매우 어려움)
     val comment: String? = null,          // AI 코멘트
 
-    val createdAt: Long = System.currentTimeMillis(),   // 생성 일시
-    val updatedAt: Long? = null                         //수정 일시
+    val createdAt: LocalDate,             // 생성 일시
+    val updatedAt: Long? = null           //수정 일시
 )

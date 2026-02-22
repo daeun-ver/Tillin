@@ -23,9 +23,8 @@ class MonthTabViewModel @Inject constructor(
     fun loadMonthStats(date: LocalDate) = viewModelScope.launch {
         try {
             val firstDayOfMonth = date.withDayOfMonth(1)
-            val monthMillis = firstDayOfMonth.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-            val dataPackage = statsRepository.getMonthlyDataForUI(monthMillis)
+            val dataPackage = statsRepository.getMonthlyDataForUI(firstDayOfMonth)
 
             _state.value = _state.value.copy(til = dataPackage.tils, monthlyStats = dataPackage.stats, isLoading = false)
 
@@ -42,9 +41,7 @@ class MonthTabViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
-                val timestamp = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-                statsRepository.updateMonthlyStats(timestamp)
+                statsRepository.updateMonthlyStats(date)
                 loadMonthStats(date)
 
                 onSuccess()

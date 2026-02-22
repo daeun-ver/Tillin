@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,9 +29,8 @@ class WeekTabViewModel @Inject constructor(
         try {
             val range = getWeekRange(date)
             val sunday = range.first()
-            val sundayMillis = sunday.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-            val dataPackage = statsRepository.getWeeklyDataForUI(sundayMillis)
+            val dataPackage = statsRepository.getWeeklyDataForUI(sunday)
 
             _state.value = _state.value.copy(til = dataPackage.tils, weeklyStats = dataPackage.stats, isLoading = false)
 
@@ -49,9 +47,7 @@ class WeekTabViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
-                val timestamp = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-                statsRepository.updateWeeklyStats(timestamp)
+                statsRepository.updateWeeklyStats(date)
                 loadWeekStats(date)
 
                 onSuccess()

@@ -27,22 +27,17 @@ import com.patrykandpatrick.vico.compose.chart.line.lineSpec
 import com.patrykandpatrick.vico.core.axis.AxisItemPlacer
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.core.entry.entryOf
-import java.time.Instant
-import java.time.ZoneId
 
 @Composable
 fun WeekEmotionChart(
     til: List<TilEntity>,
     modifier: Modifier = Modifier
 ) {
-    val zoneId = ZoneId.systemDefault()
     val sorted = til.sortedBy { it.createdAt }
     val weekMap = mutableMapOf<Int, Float>()
 
     sorted.forEach { item ->
-        val date = Instant.ofEpochMilli(item.createdAt)
-            .atZone(zoneId)
-            .toLocalDate()
+        val date = item.createdAt
 
         val dayIndex = date.dayOfWeek.value % 7
 

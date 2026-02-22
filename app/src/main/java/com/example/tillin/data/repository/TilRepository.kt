@@ -15,8 +15,6 @@ class TilRepository @Inject constructor(
 
     suspend fun getTilById(id: Long) = tilDao.getTilById(id)
 
-    fun getTilsForStats(startTime: Long, endTime: Long) = tilDao.getTilsForStats(startTime, endTime)
-
     suspend fun insertTil(til: TilEntity) {
         val analyzedTil = analyzeTil(apiService, til)
 
