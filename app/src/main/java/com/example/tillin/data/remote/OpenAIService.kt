@@ -103,7 +103,7 @@ suspend fun analyzeWeeklyStats(
         [분석 요청]
         {
           "weeklySummary": "이번 주 TIL 전체 요약과 격려 (30자 이내)",
-          "weeklyKeywords": "이번 주 가장 많이 학습한 키워드 3개",
+          "weeklyKeywords": "이번 주 가장 많이 학습한 키워드 3개 (키워드는 대괄호나 따옴표 없이, 쉼표로만 구분해서 나열)",
         }
         """.trimIndent()
 
@@ -152,7 +152,7 @@ suspend fun analyzeMonthlyStats(
         [분석 요청]
         {
           "monthlySummary": "이번 달 TIL 전체를 요약하는 따뜻한 메시지 (50자 이내)",
-          "monthlyKeywords": "이번 달 가장 많이 학습한 키워드 3개",
+          "monthlyKeywords": "이번 달 가장 많이 학습한 키워드 3개 (키워드는 대괄호나 따옴표 없이, 쉼표로만 구분해서 나열)",
           "growth": "지난달보다 성장한 점이나 인상 깊은 변화 (20자 이내)",
           "advice": "다음 달을 위한 짧은 조언 (20자 이내)",
           "averageDifficulty": "전체적인 난이도 (쉬움/보통/어려움/매우 어려움 중 하나)",
