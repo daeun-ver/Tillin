@@ -27,12 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.ui.screen.stats.component.KeywordCard
-import com.example.tillin.ui.screen.stats.month.component.AverageDifficultyCard
 import com.example.tillin.ui.screen.stats.month.component.EmotionInsightCard
 import com.example.tillin.ui.screen.stats.month.component.MonthAdviceCard
 import com.example.tillin.ui.screen.stats.month.component.MonthEmotionChart
 import com.example.tillin.ui.screen.stats.month.component.MonthGrowthCard
 import com.example.tillin.ui.screen.stats.month.component.MonthSummaryCard
+import com.example.tillin.ui.screen.stats.month.component.TotalTilCard
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Black
 import com.example.tillin.ui.theme.Dimens
@@ -121,7 +121,7 @@ fun MonthTab(
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                AverageDifficultyCard(difficulty = "어려움", modifier = Modifier.weight(1f))
+                TotalTilCard(count = state.til.size, modifier = Modifier.weight(1f))
                 EmotionInsightCard(
                     bestDay = bestDay,
                     worstDay = worstDay,

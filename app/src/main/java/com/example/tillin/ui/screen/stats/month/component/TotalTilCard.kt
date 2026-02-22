@@ -3,9 +3,7 @@ package com.example.tillin.ui.screen.stats.month.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,8 +20,8 @@ import com.example.tillin.ui.theme.Gray
 import com.example.tillin.ui.theme.White
 
 @Composable
-fun AverageDifficultyCard(
-    difficulty: String,
+fun TotalTilCard(
+    count: Int,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -40,7 +38,7 @@ fun AverageDifficultyCard(
                 .padding(Dimens.Large)
         ) {
             Text(
-                text = "평균 난이도",
+                text = "월간 TIL 개수",
                 style = AppTextStyle.BodySmall
             )
             Box(
@@ -49,7 +47,7 @@ fun AverageDifficultyCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = difficulty,
+                    text = "${count}개",
                     style = AppTextStyle.TitleLarge,
                     modifier = Modifier.align(Alignment.Center)
                 )
