@@ -44,6 +44,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "11"
@@ -97,4 +98,7 @@ dependencies {
 
     //vico 차트
     implementation("com.patrykandpatrick.vico:compose-m3:1.13.1")
+
+    //LocalDate
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 }
