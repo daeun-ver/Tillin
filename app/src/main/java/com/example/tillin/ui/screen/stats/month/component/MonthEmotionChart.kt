@@ -54,7 +54,7 @@ fun MonthEmotionChart(
         shape = RoundedCornerShape(Dimens.TILCornerRadius),
         colors = CardDefaults.cardColors(White),
         border = BorderStroke(1.dp, Gray)
-    )  {
+    ) {
         Column(
             modifier = Modifier.padding(Dimens.Small)
         ) {
@@ -74,7 +74,7 @@ fun MonthEmotionChart(
                 )
             )
 
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
