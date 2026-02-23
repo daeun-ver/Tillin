@@ -15,6 +15,9 @@ interface TilDao {
     @Query("SELECT * FROM tils ORDER BY createdAt DESC, id DESC")
     fun getAllTils(): Flow<List<TilEntity>>
 
+    @Query("SELECT * FROM tils WHERE createdAt = :today")
+    fun getTodayTils(today: LocalDate = LocalDate.now()): List<TilEntity>
+
     @Query("SELECT * FROM tils WHERE id = :id")
     suspend fun getTilById(id: Long): TilEntity?
 
