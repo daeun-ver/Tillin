@@ -74,7 +74,7 @@ fun TilListScreen(
                         modifier = Modifier.height(Dimens.Tiny)
                     )
                 }
-                items(tils) { til ->
+                items(items = tils, key = { til -> til.id }) { til ->
                     TilCard(
                         onClick = { onDetail(til.id) },
                         emotion = til.emotion,
