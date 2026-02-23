@@ -46,7 +46,7 @@ suspend fun analyzeTil(
 
     val prompt = """
         당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용을 분석해 JSON으로 응답해 주세요.
-        존댓말을 사용하며, 완결된 문장으로 끝맺음 해야 합니다.
+        최대한 한국말과 존댓말을 사용하며, 완결된 문장으로 끝맺음 해야 합니다.
 
         [TIL 내용]
         제목: ${til.title}
@@ -97,7 +97,7 @@ suspend fun analyzeWeeklyStats(
 
     val prompt = """
         당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용들을 분석해 JSON으로 응답해 주세요.
-        존댓말을 사용하며, 완결된 문장으로 끝맺음 해야 합니다.
+        최대한 한국말과 존댓말을 사용하며, 완결된 문장으로 끝맺음 해야 합니다.
 
         [TIL 내용들]
         $weeklyContent
@@ -147,7 +147,7 @@ suspend fun analyzeMonthlyStats(
 
     val prompt = """
         당신은 개발자 학습 코치입니다. 아래 TIL(Today I Learned) 내용들을 분석해 JSON으로 응답해 주세요.
-        존댓말을 사용하며, 완결된 문장으로 끝맺음 해야 합니다.
+        최대한 한국말과 존댓말을 사용하며, 완결된 문장으로 끝맺음 해야 합니다.
 
         [TIL 내용들]
         $monthlyContent
