@@ -12,7 +12,7 @@ import java.time.LocalDate
 
 @Dao
 interface TilDao {
-    @Query("SELECT * FROM tils ORDER BY createdAt DESC")
+    @Query("SELECT * FROM tils ORDER BY createdAt DESC, id DESC")
     fun getAllTils(): Flow<List<TilEntity>>
 
     @Query("SELECT * FROM tils WHERE id = :id")
