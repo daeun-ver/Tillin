@@ -56,8 +56,8 @@ fun MonthTab(
     val summary = state.monthlyStats?.monthlySummary ?: "데이터가 부족 합니다."
     val keyword = state.monthlyStats?.monthlyKeywords ?: "데이터가 부족 합니다."
 
-    val bestDay = state.monthlyStats?.bestDay ?: "0월 00일"
-    val worstDay = state.monthlyStats?.worstDay ?: "0월 00일"
+    val bestDay = state.monthlyStats?.bestDay ?: "2000-01-01"
+    val worstDay = state.monthlyStats?.worstDay ?: "2000-01-01"
     val growth = state.monthlyStats?.growth ?: "데이터가 부족 합니다."
     val advice = state.monthlyStats?.advice ?: "데이터가 부족 합니다."
 

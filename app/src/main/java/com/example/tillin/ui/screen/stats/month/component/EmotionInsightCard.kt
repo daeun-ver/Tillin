@@ -19,6 +19,8 @@ import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.Gray
 import com.example.tillin.ui.theme.White
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun EmotionInsightCard(
@@ -26,6 +28,12 @@ fun EmotionInsightCard(
     worstDay: String,
     modifier: Modifier = Modifier
 ) {
+    val displayFormatter = DateTimeFormatter.ofPattern("MM월 dd일")
+
+    val bestDayFormat = bestDay.let { LocalDate.parse(it).format(displayFormatter) }
+    val worstDayFormat = worstDay.let { LocalDate.parse(it).format(displayFormatter) }
+
+
     Card(
         modifier = modifier
             .padding(Dimens.Tiny)
@@ -50,7 +58,7 @@ fun EmotionInsightCard(
                 )
                 Spacer(modifier = Modifier.width(Dimens.Nano))
                 Text(
-                    text = bestDay,
+                    text = bestDayFormat,
                     style = AppTextStyle.Body,
                     modifier = Modifier.padding(start = Dimens.Tiny)
                 )
@@ -67,7 +75,7 @@ fun EmotionInsightCard(
                 )
                 Spacer(modifier = Modifier.width(Dimens.Nano))
                 Text(
-                    text = worstDay,
+                    text = worstDayFormat,
                     style = AppTextStyle.Body,
                     modifier = Modifier.padding(start = Dimens.Tiny)
                 )
