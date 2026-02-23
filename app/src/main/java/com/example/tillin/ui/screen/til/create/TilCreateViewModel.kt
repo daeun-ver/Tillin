@@ -7,6 +7,7 @@ import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,6 +17,7 @@ class TilCreateViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TilCreateState())
+    val state = _state.asStateFlow()
 
     fun saveTil(
         til: TilEntity,
