@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -17,7 +16,6 @@ import javax.inject.Inject
 class TilListViewModel @Inject constructor(
     private val tilRepository: TilRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow(TilListState())
     val state: StateFlow<TilListState> = tilRepository.getAllTils()
         .map { list ->
             TilListState(tils = list, isLoading = false)
