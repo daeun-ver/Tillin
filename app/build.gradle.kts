@@ -101,4 +101,9 @@ dependencies {
 
     //LocalDate
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    //glance
+    implementation(libs.androidx.glance.appwidget)
+    implementation(libs.androidx.glance.material3)
+    implementation(libs.androidx.glance.material)
 }
