@@ -12,7 +12,7 @@ class TilRepository @Inject constructor(
     private val apiService: OpenAIService
 ) {
     fun getAllTils() = tilDao.getAllTils()
-    
+
     suspend fun getTilById(id: Long) = tilDao.getTilById(id)
 
     suspend fun insertTil(til: TilEntity) {
