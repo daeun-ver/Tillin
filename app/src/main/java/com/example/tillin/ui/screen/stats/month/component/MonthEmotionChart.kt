@@ -16,17 +16,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.screen.EmotionToEmoji
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.Gray
+import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.column.columnChart
+import com.patrykandpatrick.vico.core.axis.AxisItemPlacer
+import com.patrykandpatrick.vico.core.component.shape.LineComponent
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.core.entry.entryOf
 
@@ -47,6 +51,7 @@ fun MonthEmotionChart(
             entryOf(index.toFloat(), count.toFloat())
         }
     )
+    val maxY = (counts.maxOrNull() ?: 0)
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -61,12 +66,20 @@ fun MonthEmotionChart(
             Text(text = "이번 달 감정 분석", style = AppTextStyle.BodySmall)
             Spacer(modifier = Modifier.height(Dimens.Tiny))
             Chart(
-                chart = columnChart(),
+                chart = columnChart(
+                    columns = listOf(LineComponent(
+                        color = PrimaryColor.toArgb(),
+                        thicknessDp = 16f
+                    ))
+                ),
                 model = chartEntryModel,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(Dimens.Tiny),
-                startAxis = rememberStartAxis(),
+                startAxis = rememberStartAxis(
+                    itemPlacer = AxisItemPlacer.Vertical.default(maxY + 1),
+                    guideline = null
+                ),
                 bottomAxis = rememberBottomAxis(
                     valueFormatter = { value, _ ->
                         emotions.getOrNull(value.toInt()) ?: ""
