@@ -10,6 +10,11 @@ val PrimaryBackground = Color(0xFFFFF4EC)
 val PrimaryHalfColor = Color(0xFFFDC3C4)
 val PrimaryTenthColor = Color(0xFFFFE4E4)
 
+//다크모드
+val DarkPrimaryColor = Color(0xFFFFB2B4)
+val DarkPrimaryBackground = Color(0xFF1F1B16)
+val DarkPrimaryTenthColor = Color(0xFF3D2E2E)
+
 //공통 색상
 val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
