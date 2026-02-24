@@ -1,5 +1,6 @@
 package com.example.tillin.ui.screen.til.list
 
+import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -15,10 +16,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.glance.appwidget.updateAll
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.ui.screen.til.component.TilCard
 import com.example.tillin.ui.theme.AppTextStyle
@@ -26,6 +30,7 @@ import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.PrimaryBackground
 import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
+import com.example.tillin.widget.TilWidget
 
 @Composable
 fun TilListScreen(
@@ -35,6 +40,17 @@ fun TilListScreen(
     val viewModel: TilListViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
     val tilGroup = state.tils.groupBy { it.createdAt.toString() }
+
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        try {
+            TilWidget().updateAll(context)
+            Log.d("TILLIN_DEBUG", "목록 진입: 위젯 자동 갱신 성공")
+        } catch (e: Exception) {
+            Log.e("TILLIN_DEBUG", "위젯 갱신 실패: ${e.message}")
+            }
+        }
 
     Scaffold(
         modifier = Modifier,
@@ -79,7 +95,7 @@ fun TilListScreen(
                         onClick = { onDetail(til.id) },
                         emotion = til.emotion,
                         title = til.title,
-                        onDelete = { viewModel.deleteTil(til) }
+                        onDelete = { viewModel.deleteTil(til, context) }
                     )
                     Spacer(
                         modifier = Modifier.height(Dimens.Tiny)
