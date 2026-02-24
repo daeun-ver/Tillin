@@ -1,5 +1,6 @@
 package com.example.tillin.ui.screen.til.create
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -36,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.data.local.entity.TilEntity
@@ -57,6 +59,7 @@ fun TilCreateScreen(
     val scrollState = rememberScrollState()
     val viewModel: TilCreateViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
+    val context = LocalContext.current
 
     var title by remember { mutableStateOf(editTil?.title.orEmpty()) }
     var learned by remember { mutableStateOf(editTil?.learned.orEmpty()) }
@@ -96,7 +99,10 @@ fun TilCreateScreen(
                                 )
                                 viewModel.saveTil(
                                     onSuccess = { onDone() },
-                                    til = finalTil
+                                    til = finalTil,
+                                    onError = { error ->
+                                        Toast.makeText(context, "오류 발생. 잠시 후 다시 시도해 주세요.", Toast.LENGTH_LONG).show()
+                                    }
                                 )
                             }
                         ) {
