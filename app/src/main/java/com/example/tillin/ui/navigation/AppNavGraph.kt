@@ -20,9 +20,6 @@ fun AppNavGraph(navController: NavHostController, modifier: Modifier = Modifier)
         startDestination = "home",
         modifier = modifier
     ) {
-        composable("splash") {
-
-        }
         composable(
             route = "home",
             exitTransition = {
