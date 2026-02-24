@@ -19,6 +19,8 @@ import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.White
 import com.example.tillin.ui.theme.WidgetTextStyle
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class TilWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = TilWidget()
@@ -26,8 +28,10 @@ class TilWidgetReceiver : GlanceAppWidgetReceiver() {
 
 class TilWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val database = TillinDatabase.getDatabase(context)
-        val todayTil = database.tilDao().getTodayTils()
+        val todayTil = withContext(Dispatchers.IO) {
+            val database = TillinDatabase.getDatabase(context)
+            database.tilDao().getTodayTils()
+        }
         provideContent {
             TilWidgetContent(todayTil)
         }
@@ -44,7 +48,7 @@ fun TilWidgetContent(til: List<TilEntity>?) {
             Spacer(modifier = GlanceModifier.defaultWeight())
             if (!til.isNullOrEmpty()) {
                 til.forEach { tils ->
-                    Text(text = tils.title, style = WidgetTextStyle.Body)
+                    Text(text = tils.title, style = WidgetTextStyle.BodyTitle)
                 }
             } else {
                 Text(text = "작성한 TIL이 없습니다.", style = WidgetTextStyle.Body)
