@@ -95,9 +95,7 @@ fun TilCreateScreen(
                                     createdAt = editTil?.createdAt ?: LocalDate.now()
                                 )
                                 viewModel.saveTil(
-                                    onSuccess = {
-                                        onDone()
-                                    },
+                                    onSuccess = { onDone() },
                                     til = finalTil
                                 )
                             }

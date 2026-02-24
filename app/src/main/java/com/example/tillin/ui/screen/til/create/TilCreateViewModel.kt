@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.data.repository.TilRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +26,7 @@ class TilCreateViewModel @Inject constructor(
         onSuccess: () -> Unit = {},
         onError: (Exception) -> Unit = {}
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
                 if (til.id == 0L) {
@@ -33,10 +35,11 @@ class TilCreateViewModel @Inject constructor(
                     tilRepository.updateTil(til)
                 }
 
-                _state.value = _state.value.copy(success = true)
-                onSuccess()
-                Log.e("TILLIN_DEBUG", "저장성공")
-
+                withContext(Dispatchers.Main) {
+                    _state.value = _state.value.copy(success = true)
+                    onSuccess()
+                    Log.e("TILLIN_DEBUG", "저장성공")
+                }
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
                     isLoading = false,
