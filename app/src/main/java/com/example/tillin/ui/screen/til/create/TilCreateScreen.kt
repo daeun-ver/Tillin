@@ -74,7 +74,7 @@ fun TilCreateScreen(
             ) {
                 TopAppBar(
                     title = {},
-                    colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.background),
+                    colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.surfaceVariant),
                     navigationIcon = {
                         IconButton(
                             onClick = { onDone() }
@@ -147,7 +147,7 @@ fun TilCreateScreen(
 
             HorizontalDivider(
                 thickness = 1.dp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.surfaceContainer
             )
 
             Spacer(modifier = Modifier.height(Dimens.Small))
@@ -173,8 +173,8 @@ fun TilCreateScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surface,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                    focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    focusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
 
                     focusedTextColor = MaterialTheme.colorScheme.onSurface,
                     unfocusedTextColor = MaterialTheme.colorScheme.onSurface
@@ -204,8 +204,8 @@ fun TilCreateScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surface,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                    focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    focusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
 
                     focusedTextColor = MaterialTheme.colorScheme.onSurface,
                     unfocusedTextColor = MaterialTheme.colorScheme.onSurface
@@ -235,8 +235,8 @@ fun TilCreateScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surface,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                    focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    focusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
 
                     focusedTextColor = MaterialTheme.colorScheme.onSurface,
                     unfocusedTextColor = MaterialTheme.colorScheme.onSurface

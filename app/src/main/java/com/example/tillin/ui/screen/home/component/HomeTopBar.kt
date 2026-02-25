@@ -23,7 +23,6 @@ import com.example.tillin.ui.theme.Black
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.LocalIsDarkMode
 import com.example.tillin.ui.theme.LocalThemeHandler
-import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
 
 @Composable
@@ -40,7 +39,7 @@ fun HomeTopBar(
             selectedTabIndex = HomeTab.entries.indexOf(selected),
             modifier = modifier,
             contentColor = MaterialTheme.colorScheme.onSurface,
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
             edgePadding = Dimens.Small,
             indicator = { tabPosition ->
                 TabRowDefaults.Indicator(
