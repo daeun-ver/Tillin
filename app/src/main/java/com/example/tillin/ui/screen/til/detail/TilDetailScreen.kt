@@ -21,6 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -70,12 +71,13 @@ fun TilDetailScreen(
             Surface(shadowElevation = 2.dp) {
                 TopAppBar(
                     title = {},
-                    colors = TopAppBarDefaults.topAppBarColors(White),
+                    colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.surfaceVariant),
                     navigationIcon = {
                         IconButton(onClick = { onBack() }) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,
-                                contentDescription = "뒤로가기"
+                                contentDescription = "뒤로가기",
+                                tint = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -88,6 +90,7 @@ fun TilDetailScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(scrollState)
+                .background(color = MaterialTheme.colorScheme.surfaceBright)
         ) {
             // 제목
             Box(
@@ -97,10 +100,14 @@ fun TilDetailScreen(
                     .heightIn(75.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
-                Text(text = title, style = AppTextStyle.TitleSmall)
+                Text(
+                    text = title,
+                    style = AppTextStyle.TitleSmall,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             }
 
-            HorizontalDivider(thickness = 1.dp, color = Gray)
+            HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.surfaceContainer)
             Spacer(modifier = Modifier.height(Dimens.Small))
 
             // AI 요약
@@ -126,13 +133,19 @@ fun TilDetailScreen(
                     .padding(horizontal = Dimens.Medium)
                     .heightIn(60.dp)
                     .background(
-                        color = PrimaryBackground,
+                        color = MaterialTheme.colorScheme.background,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.surfaceVariant,
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
                 Text(
                     text = comment,
                     style = AppTextStyle.Body,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(Dimens.Small)
                 )
             }
@@ -153,18 +166,19 @@ fun TilDetailScreen(
                     .padding(horizontal = Dimens.Medium)
                     .heightIn(60.dp)
                     .background(
-                        color = White,
+                        color = MaterialTheme.colorScheme.surface,
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
                     .border(
                         width = 1.dp,
-                        color = Gray,
+                        color = MaterialTheme.colorScheme.surfaceContainer,
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
                 Text(
                     text = learned,
                     style = AppTextStyle.Body,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(Dimens.Small)
                 )
             }
@@ -185,18 +199,19 @@ fun TilDetailScreen(
                     .padding(horizontal = Dimens.Medium)
                     .heightIn(60.dp)
                     .background(
-                        color = White,
+                        color = MaterialTheme.colorScheme.surface,
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
                     .border(
                         width = 1.dp,
-                        color = Gray,
+                        color = MaterialTheme.colorScheme.surfaceContainer,
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
                 Text(
                     text = difficulty,
                     style = AppTextStyle.Body,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(Dimens.Small)
                 )
             }
@@ -217,18 +232,19 @@ fun TilDetailScreen(
                     .padding(horizontal = Dimens.Medium)
                     .heightIn(60.dp)
                     .background(
-                        color = White,
+                        color = MaterialTheme.colorScheme.surface,
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
                     .border(
                         width = 1.dp,
-                        color = Gray,
+                        color = MaterialTheme.colorScheme.surfaceContainer,
                         shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
                     )
             ) {
                 Text(
                     text = tomorrow,
                     style = AppTextStyle.Body,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(Dimens.Small)
                 )
             }
