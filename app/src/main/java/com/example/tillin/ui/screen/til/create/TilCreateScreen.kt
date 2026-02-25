@@ -18,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -73,14 +74,15 @@ fun TilCreateScreen(
             ) {
                 TopAppBar(
                     title = {},
-                    colors = TopAppBarDefaults.topAppBarColors(White),
+                    colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.background),
                     navigationIcon = {
                         IconButton(
                             onClick = { onDone() }
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
-                                contentDescription = "뒤로가기"
+                                contentDescription = "뒤로가기",
+                                tint = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     },
@@ -109,7 +111,7 @@ fun TilCreateScreen(
                             Text(
                                 text = "저장",
                                 modifier = Modifier.padding(horizontal = Dimens.Tiny),
-                                color = PrimaryColor
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -136,13 +138,16 @@ fun TilCreateScreen(
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    unfocusedIndicatorColor = Color.Transparent,
+
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                 )
             )
 
             HorizontalDivider(
                 thickness = 1.dp,
-                color = Gray
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(Dimens.Small))
@@ -151,6 +156,7 @@ fun TilCreateScreen(
             Text(
                 text = "배운 것",
                 style = AppTextStyle.BodyTitle,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
@@ -165,10 +171,13 @@ fun TilCreateScreen(
                 shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
                 textStyle = AppTextStyle.Body,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = White,
-                    unfocusedContainerColor = White,
-                    focusedBorderColor = Gray,
-                    unfocusedBorderColor = Gray
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                 )
             )
 
@@ -178,6 +187,7 @@ fun TilCreateScreen(
             Text(
                 text = "어려운 점",
                 style = AppTextStyle.BodyTitle,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
@@ -192,10 +202,13 @@ fun TilCreateScreen(
                 shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
                 textStyle = AppTextStyle.Body,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = White,
-                    unfocusedContainerColor = White,
-                    focusedBorderColor = Gray,
-                    unfocusedBorderColor = Gray
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                 )
             )
 
@@ -205,6 +218,7 @@ fun TilCreateScreen(
             Text(
                 text = "내일 할 일",
                 style = AppTextStyle.BodyTitle,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
@@ -219,10 +233,13 @@ fun TilCreateScreen(
                 shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
                 textStyle = AppTextStyle.Body,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = White,
-                    unfocusedContainerColor = White,
-                    focusedBorderColor = Gray,
-                    unfocusedBorderColor = Gray
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                 )
             )
         }
