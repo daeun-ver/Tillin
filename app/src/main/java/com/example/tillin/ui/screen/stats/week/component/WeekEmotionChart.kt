@@ -17,11 +17,13 @@ import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
+import com.patrykandpatrick.vico.compose.axis.axisLabelComponent
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.line.lineChart
 import com.patrykandpatrick.vico.compose.chart.line.lineSpec
+import com.patrykandpatrick.vico.compose.component.lineComponent
 import com.patrykandpatrick.vico.core.axis.AxisItemPlacer
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.core.entry.entryOf
@@ -82,6 +84,10 @@ fun WeekEmotionChart(
                     .fillMaxWidth()
                     .padding(Dimens.Tiny),
                 startAxis = rememberStartAxis(
+                    axis = lineComponent(
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        thickness = 1.dp
+                    ),
                     valueFormatter = { value, _ ->
                         when (value.toInt()) {
                             1 -> "😭"
@@ -97,10 +103,18 @@ fun WeekEmotionChart(
                     guideline = null
                 ),
                 bottomAxis = rememberBottomAxis(
+                    label = axisLabelComponent(MaterialTheme.colorScheme.onSurface),
+                    axis = lineComponent(
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        thickness = 1.dp
+                    ),
                     valueFormatter = { value, _ ->
                         days.getOrElse(value.toInt()) { "" }
                     },
-                    guideline = null,
+                    guideline = lineComponent(
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        thickness = 1.dp
+                    ),
                     itemPlacer = AxisItemPlacer.Horizontal.default(
                         spacing = 1,
                         offset = 0,

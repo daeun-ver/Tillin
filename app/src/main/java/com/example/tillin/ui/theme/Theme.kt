@@ -20,7 +20,8 @@ private val DarkColorScheme = darkColorScheme(
     surfaceVariant = DarkTopBarColor,       // 앱바 컬러
     surface = DarkCardColor,                // 카드 색상
     surfaceContainer = DarkLightColor,      // 카드 서브 색상
-    onSurface = White                       // 글자 색상
+    onSurface = White,                      // 글자 색상
+    onTertiary = White                      // 차트 라인 색상
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -31,7 +32,8 @@ private val LightColorScheme = lightColorScheme(
     surfaceVariant = White,
     surface = White,
     surfaceContainer = Gray,
-    onSurface = Black
+    onSurface = Black,
+    onTertiary = LightGray
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),

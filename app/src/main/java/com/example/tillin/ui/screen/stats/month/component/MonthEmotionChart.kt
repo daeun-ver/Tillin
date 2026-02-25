@@ -23,10 +23,12 @@ import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.screen.EmotionToEmoji
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
+import com.patrykandpatrick.vico.compose.axis.axisLabelComponent
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.column.columnChart
+import com.patrykandpatrick.vico.compose.component.lineComponent
 import com.patrykandpatrick.vico.core.axis.AxisItemPlacer
 import com.patrykandpatrick.vico.core.component.shape.LineComponent
 import com.patrykandpatrick.vico.core.entry.entryModelOf
@@ -81,10 +83,24 @@ fun MonthEmotionChart(
                     .fillMaxWidth()
                     .padding(Dimens.Tiny),
                 startAxis = rememberStartAxis(
+                    label = axisLabelComponent(MaterialTheme.colorScheme.onSurface),
+                    axis = lineComponent(
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        thickness = 1.dp
+                    ),
                     itemPlacer = AxisItemPlacer.Vertical.default(maxY + 1),
                     guideline = null
                 ),
                 bottomAxis = rememberBottomAxis(
+                    label = axisLabelComponent(MaterialTheme.colorScheme.onSurface),
+                    axis = lineComponent(
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        thickness = 1.dp
+                    ),
+                    guideline = lineComponent(
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        thickness = 1.dp
+                    ),
                     valueFormatter = { value, _ ->
                         emotions.getOrNull(value.toInt()) ?: ""
                     }
