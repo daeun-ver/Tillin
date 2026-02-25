@@ -16,6 +16,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,9 +35,7 @@ import com.example.tillin.ui.screen.stats.month.component.MonthGrowthCard
 import com.example.tillin.ui.screen.stats.month.component.MonthSummaryCard
 import com.example.tillin.ui.screen.stats.month.component.TotalTilCard
 import com.example.tillin.ui.theme.AppTextStyle
-import com.example.tillin.ui.theme.Black
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.PrimaryBackground
 import java.time.LocalDate
 import java.time.Period
 
@@ -67,7 +66,7 @@ fun MonthTab(
 
     Scaffold(
         modifier = Modifier,
-        containerColor = PrimaryBackground,
+        containerColor = MaterialTheme.colorScheme.background,
     ) { padding ->
         Column(
             modifier = Modifier
@@ -90,13 +89,17 @@ fun MonthTab(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = Black
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }
 
                 Row(modifier = Modifier.align(Alignment.Center)) {
-                    Text(text = "${year}년 ${month}월", style = AppTextStyle.Title)
+                    Text(
+                        text = "${year}년 ${month}월",
+                        style = AppTextStyle.Title,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 }
 
                 Row(
@@ -109,7 +112,7 @@ fun MonthTab(
                             Icons.Default.ArrowForward,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = Black
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }

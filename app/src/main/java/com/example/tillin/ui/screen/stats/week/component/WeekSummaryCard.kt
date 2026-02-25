@@ -9,14 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.Gray
-import com.example.tillin.ui.theme.White
 
 @Composable
 fun WeekSummaryCard(
@@ -28,8 +27,8 @@ fun WeekSummaryCard(
             .fillMaxWidth()
             .padding(Dimens.Tiny),
         shape = RoundedCornerShape(Dimens.TILCornerRadius),
-        colors = CardDefaults.cardColors(White),
-        border = BorderStroke(1.dp, Gray)
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceContainer)
     ) {
         Column(
             modifier = Modifier.padding(Dimens.Large)
@@ -39,6 +38,7 @@ fun WeekSummaryCard(
             Text(
                 text = summary,
                 style = AppTextStyle.Body,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(start = Dimens.Tiny)
             )
         }

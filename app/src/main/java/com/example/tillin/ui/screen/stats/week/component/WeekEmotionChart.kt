@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,9 +17,6 @@ import androidx.compose.ui.unit.dp
 import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.Gray
-import com.example.tillin.ui.theme.PrimaryColor
-import com.example.tillin.ui.theme.White
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
@@ -55,20 +53,24 @@ fun WeekEmotionChart(
             .fillMaxWidth()
             .padding(Dimens.Tiny),
         shape = RoundedCornerShape(Dimens.TILCornerRadius),
-        colors = CardDefaults.cardColors(White),
-        border = BorderStroke(1.dp, Gray)
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
+        border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.surfaceContainer)
     ) {
         Column(
             modifier = Modifier.padding(Dimens.Small)
         ) {
             val days = arrayOf("일", "월", "화", "수", "목", "금", "토")
 
-            Text(text = "이번 주 감정 분석", style = AppTextStyle.BodySmall)
+            Text(
+                text = "이번 주 감정 분석",
+                style = AppTextStyle.BodySmall,
+                color = MaterialTheme.colorScheme.onSurface
+            )
             Spacer(modifier = Modifier.height(Dimens.Tiny))
             Chart(
                 chart = lineChart(
                     lines = listOf(
-                        lineSpec(lineColor = PrimaryColor)
+                        lineSpec(lineColor = MaterialTheme.colorScheme.primary)
                     ),
                     axisValuesOverrider = com.patrykandpatrick.vico.core.chart.values.AxisValuesOverrider.fixed(
                         minY = 1f,
@@ -103,7 +105,7 @@ fun WeekEmotionChart(
                         spacing = 1,
                         offset = 0,
                         shiftExtremeTicks = false
-                    ),
+                    )
                 )
             )
         }
