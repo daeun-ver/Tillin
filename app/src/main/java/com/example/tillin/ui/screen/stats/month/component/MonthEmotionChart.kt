@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,9 +23,6 @@ import com.example.tillin.data.local.entity.TilEntity
 import com.example.tillin.ui.screen.EmotionToEmoji
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.Gray
-import com.example.tillin.ui.theme.PrimaryColor
-import com.example.tillin.ui.theme.White
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
@@ -57,20 +55,26 @@ fun MonthEmotionChart(
             .fillMaxWidth()
             .padding(Dimens.Tiny),
         shape = RoundedCornerShape(Dimens.TILCornerRadius),
-        colors = CardDefaults.cardColors(White),
-        border = BorderStroke(1.dp, Gray)
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
+        border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.surfaceContainer)
     ) {
         Column(
             modifier = Modifier.padding(Dimens.Small)
         ) {
-            Text(text = "이번 달 감정 분석", style = AppTextStyle.BodySmall)
+            Text(
+                text = "이번 달 감정 분석",
+                style = AppTextStyle.BodySmall,
+                color = MaterialTheme.colorScheme.onSurface
+            )
             Spacer(modifier = Modifier.height(Dimens.Tiny))
             Chart(
                 chart = columnChart(
-                    columns = listOf(LineComponent(
-                        color = PrimaryColor.toArgb(),
-                        thicknessDp = 16f
-                    ))
+                    columns = listOf(
+                        LineComponent(
+                            color = MaterialTheme.colorScheme.primary.toArgb(),
+                            thicknessDp = 16f
+                        )
+                    )
                 ),
                 model = chartEntryModel,
                 modifier = Modifier
@@ -97,7 +101,11 @@ fun MonthEmotionChart(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(text = EmotionToEmoji(emotion), style = AppTextStyle.BodySmall)
                         Spacer(modifier = Modifier.width(Dimens.Nano))
-                        Text(text = "${counts[index]}개", style = AppTextStyle.BodySmall)
+                        Text(
+                            text = "${counts[index]}개",
+                            style = AppTextStyle.BodySmall,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
                     }
                 }
             }

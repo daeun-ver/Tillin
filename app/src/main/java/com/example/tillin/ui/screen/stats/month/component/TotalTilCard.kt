@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,8 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.Gray
-import com.example.tillin.ui.theme.White
 
 @Composable
 fun TotalTilCard(
@@ -29,8 +28,8 @@ fun TotalTilCard(
             .padding(Dimens.Tiny)
             .height(130.dp),
         shape = RoundedCornerShape(Dimens.TILCornerRadius),
-        colors = CardDefaults.cardColors(White),
-        border = BorderStroke(1.dp, Gray)
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
+        border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.surfaceContainer)
     ) {
         Column(
             modifier = Modifier
@@ -39,7 +38,8 @@ fun TotalTilCard(
         ) {
             Text(
                 text = "월간 TIL 개수",
-                style = AppTextStyle.BodySmall
+                style = AppTextStyle.BodySmall,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Box(
                 modifier = Modifier
@@ -49,6 +49,7 @@ fun TotalTilCard(
                 Text(
                     text = "${count}개",
                     style = AppTextStyle.TitleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
