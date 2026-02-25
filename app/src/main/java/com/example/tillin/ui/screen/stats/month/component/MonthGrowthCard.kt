@@ -27,7 +27,7 @@ fun MonthGrowthCard(
             .fillMaxWidth()
             .padding(Dimens.Tiny),
         shape = RoundedCornerShape(Dimens.TILCornerRadius),
-        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onSurface),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
         border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.surfaceContainer)
 
     ) {
