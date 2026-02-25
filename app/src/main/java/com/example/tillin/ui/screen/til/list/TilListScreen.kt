@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,11 +55,11 @@ fun TilListScreen(
 
     Scaffold(
         modifier = Modifier,
-        containerColor = PrimaryBackground,
+        containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onCreate() },
-                containerColor = PrimaryColor,
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = White,
                 modifier = Modifier.size(60.dp),
                 shape = CircleShape

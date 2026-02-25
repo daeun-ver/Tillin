@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.example.tillin.ui.screen.EmotionToEmoji
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.White
 
 @Composable
 fun TilCard(
@@ -68,7 +67,7 @@ fun TilCard(
                 Icon(
                     Icons.Default.Delete,
                     contentDescription = "삭제",
-                    tint = White
+                    tint = MaterialTheme.colorScheme.surface
                 )
             }
         }
@@ -79,7 +78,7 @@ fun TilCard(
                 .fillMaxSize()
                 .clickable { onClick() },
             shape = RoundedCornerShape(Dimens.TILCornerRadius),
-            colors = CardDefaults.cardColors(White),
+            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
             )
@@ -91,12 +90,14 @@ fun TilCard(
             ) {
                 Text(
                     text = emoji,
-                    style = AppTextStyle.TitleSmall
+                    style = AppTextStyle.TitleSmall,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Box(modifier = Modifier.padding(Dimens.Nano)) { }
                 Text(
                     text = title,
-                    style = AppTextStyle.TitleSmall
+                    style = AppTextStyle.TitleSmall,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
