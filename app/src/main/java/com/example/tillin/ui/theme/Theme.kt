@@ -13,14 +13,14 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = DarkPrimaryColor,
-    secondary = DarkPrimaryTenthColor,
-    background = DarkPrimaryBackground,
-    surfaceBright = DarkSecondBackground,
-    surfaceVariant = DarkTopBarColor,
-    surface = DarkCardColor,
-    surfaceContainer = DarkLightColor,
-    onSurface = White
+    primary = DarkPrimaryColor,             // 메인 컬러
+    secondary = DarkPrimaryTenthColor,      // 서브 컬러
+    background = DarkPrimaryBackground,     // 메인 배경 컬러
+    surfaceBright = DarkSecondBackground,   // 서브 배경 컬러
+    surfaceVariant = DarkTopBarColor,       // 앱바 컬러
+    surface = DarkCardColor,                // 카드 색상
+    surfaceContainer = DarkLightColor,      // 카드 서브 색상
+    onSurface = White                       // 글자 색상
 )
 
 private val LightColorScheme = lightColorScheme(
