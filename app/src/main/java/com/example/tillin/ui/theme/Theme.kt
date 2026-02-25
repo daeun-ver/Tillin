@@ -9,18 +9,26 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
     primary = DarkPrimaryColor,
     secondary = DarkPrimaryTenthColor,
-    background = DarkPrimaryBackground
+    background = DarkPrimaryBackground,
+    surface = DarkCardColor,
+    onSurfaceVariant = DarkLightColor,
+    onSurface = White
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryColor,
     secondary = PrimaryTenthColor,
-    background = PrimaryBackground
+    background = PrimaryBackground,
+    surface = White,
+    onSurfaceVariant = Gray,
+    onSurface = Black
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -32,6 +40,9 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
     */
 )
+
+val LocalThemeHandler = staticCompositionLocalOf { {} }
+val LocalIsDarkMode = compositionLocalOf { false }
 
 @Composable
 fun TillinTheme(
