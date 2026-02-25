@@ -1,6 +1,7 @@
 package com.example.tillin.ui.screen.til.create
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -125,6 +126,7 @@ fun TilCreateScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(scrollState)
+                .background(color = MaterialTheme.colorScheme.surfaceBright)
         ) {
             TextField(
                 value = title,
@@ -251,7 +253,7 @@ fun TilCreateScreen(
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        CircularProgressIndicator(color = PrimaryColor)
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                         Spacer(modifier = Modifier.height(Dimens.Small))
                         Text(
                             text = "TIL 분석 중...",
