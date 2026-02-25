@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,9 +30,7 @@ import com.example.tillin.ui.screen.stats.component.KeywordCard
 import com.example.tillin.ui.screen.stats.week.component.WeekEmotionChart
 import com.example.tillin.ui.screen.stats.week.component.WeekSummaryCard
 import com.example.tillin.ui.theme.AppTextStyle
-import com.example.tillin.ui.theme.Black
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.PrimaryBackground
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.Period
@@ -65,7 +64,7 @@ fun WeekTab(
 
     Scaffold(
         modifier = Modifier,
-        containerColor = PrimaryBackground,
+        containerColor = MaterialTheme.colorScheme.background,
     ) { padding ->
         Column(
             modifier = Modifier
@@ -87,13 +86,17 @@ fun WeekTab(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = Black
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }
 
                 Row(modifier = Modifier.align(Alignment.Center)) {
-                    Text(text = "${year}년 ${month}월 ${week}주차", style = AppTextStyle.Title)
+                    Text(
+                        text = "${year}년 ${month}월 ${week}주차",
+                        style = AppTextStyle.Title,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 }
 
                 Row(
@@ -106,7 +109,7 @@ fun WeekTab(
                             Icons.Default.ArrowForward,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = Black
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }
