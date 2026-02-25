@@ -9,9 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.tillin.ui.theme.AppTextStyle
-import com.example.tillin.ui.theme.Black
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.Gray
 
 @Composable
 fun DifficultyTag (

@@ -39,9 +39,6 @@ import com.example.tillin.ui.screen.til.component.DifficultyTag
 import com.example.tillin.ui.screen.til.component.EmotionTag
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.Gray
-import com.example.tillin.ui.theme.PrimaryBackground
-import com.example.tillin.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

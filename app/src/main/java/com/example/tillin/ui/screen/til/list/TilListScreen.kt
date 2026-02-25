@@ -28,8 +28,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.ui.screen.til.component.TilCard
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
-import com.example.tillin.ui.theme.PrimaryBackground
-import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
 import com.example.tillin.widget.TilWidget
 

@@ -47,7 +47,6 @@ import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Black
 import com.example.tillin.ui.theme.Dimens
 import com.example.tillin.ui.theme.Gray
-import com.example.tillin.ui.theme.PrimaryColor
 import com.example.tillin.ui.theme.White
 import java.time.LocalDate
 
