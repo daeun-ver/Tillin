@@ -13,6 +13,7 @@ val PrimaryTenthColor = Color(0xFFFFE4E4)
 //다크모드
 val DarkPrimaryColor = Color(0xFFFFB2B4)
 val DarkPrimaryBackground = Color(0xFF232323)
+val DarkTopBarColor = Color(0xFF1F1F1F)
 val DarkCardColor = Color(0xFF2A2A2A)
 val DarkLightColor = Color(0xFF363636)
 val DarkPrimaryTenthColor = Color(0xFF856161)
