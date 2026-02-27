@@ -1,6 +1,5 @@
 package com.example.tillin.ui.screen.til.create
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -20,8 +18,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -126,7 +122,6 @@ fun TilCreateScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding)
                     .verticalScroll(scrollState)
                     .background(color = MaterialTheme.colorScheme.surfaceBright)
             ) {
@@ -169,21 +164,20 @@ fun TilCreateScreen(
                     onValueChange = { difficulty = it })
                 TilCreateItem(title = "내일 할 일", value = tomorrow, onValueChange = { tomorrow = it })
 
-
-                if (state.isLoading) {
-                    Surface(
-                        color = Black.copy(alpha = 0.3f),
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Box(contentAlignment = Alignment.Center) {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                                Spacer(modifier = Modifier.height(Dimens.Small))
-                                Text(
-                                    text = "TIL 분석 중...",
-                                    style = AppTextStyle.Body.copy(color = White)
-                                )
-                            }
+            }
+            if (state.isLoading) {
+                Surface(
+                    color = Black.copy(alpha = 0.3f),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                            Spacer(modifier = Modifier.height(Dimens.Small))
+                            Text(
+                                text = "TIL 분석 중...",
+                                style = AppTextStyle.Body.copy(color = White)
+                            )
                         }
                     }
                 }
