@@ -20,9 +20,10 @@ interface OpenAIService {
 }
 
 data class ChatRequest(
-    val model: String = "mistralai/mistral-7b-instruct",
+    val model: String = "google/gemini-2.5-flash",
     val messages: List<Message>,
-    val temperature: Double = 0.7
+    val temperature: Double = 0.7,
+    val max_tokens: Int = 2048
 )
 
 data class Message(
@@ -57,7 +58,6 @@ suspend fun analyzeTil(
         [분석 요청]
         {
           "emotion": "성취감/만족/평범/어려움/좌절 중 하나",
-          "emotionScore": 1-5 사이 정수,
           "difficultyLevel": "쉬움/보통/어려움/매우 어려움 중 하나",
           "comment": "격려나 조언 한 문장 (20자 이내)"
         }
@@ -81,7 +81,6 @@ suspend fun analyzeTil(
 
     til.copy(
         emotion = json.getString("emotion"),
-        emotionScore = json.getInt("emotionScore"),
         difficultyLevel = json.getString("difficultyLevel"),
         comment = json.getString("comment")
     )
