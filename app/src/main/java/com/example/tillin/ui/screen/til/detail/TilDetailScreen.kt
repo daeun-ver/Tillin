@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.ui.screen.til.component.DifficultyTag
 import com.example.tillin.ui.screen.til.component.EmotionTag
+import com.example.tillin.ui.screen.til.component.TilDetailItem
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Dimens
 
@@ -107,144 +108,16 @@ fun TilDetailScreen(
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.surfaceContainer)
             Spacer(modifier = Modifier.height(Dimens.Small))
 
-            // AI 요약
-            Row {
-                Text(
-                    text = "AI 요약",
-                    style = AppTextStyle.BodyTitle,
-                    modifier = Modifier.padding(
-                        start = Dimens.XLarge,
-                        end = Dimens.Small,
-                        top = Dimens.Nano,
-                        bottom = Dimens.Nano
-                    )
-                )
-                EmotionTag(emotion)
-                Spacer(modifier = Modifier.width(Dimens.Tiny))
-                DifficultyTag(difficultyLevel)
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium)
-                    .heightIn(60.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.background,
-                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
-                    )
-            ) {
-                Text(
-                    text = comment,
-                    style = AppTextStyle.Body,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(Dimens.Small)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(Dimens.XLarge))
-
-            // 배운 것
-            Text(
-                text = "배운 것",
-                style = AppTextStyle.BodyTitle,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
+            TilDetailItem(
+                title = "AI 요약",
+                content = comment,
+                containerColor = MaterialTheme.colorScheme.background,
+                borderColor = MaterialTheme.colorScheme.surfaceVariant
             )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium)
-                    .heightIn(60.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.surface,
-                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.surfaceContainer,
-                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
-                    )
-            ) {
-                Text(
-                    text = learned,
-                    style = AppTextStyle.Body,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(Dimens.Small)
-                )
-            }
+            TilDetailItem("배운 것", learned)
+            TilDetailItem("어려운 점", difficulty)
+            TilDetailItem("내일 할 일", tomorrow)
 
-            Spacer(modifier = Modifier.height(Dimens.XLarge))
-
-            // 어려운 점
-            Text(
-                text = "어려운 점",
-                style = AppTextStyle.BodyTitle,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium)
-                    .heightIn(60.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.surface,
-                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.surfaceContainer,
-                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
-                    )
-            ) {
-                Text(
-                    text = difficulty,
-                    style = AppTextStyle.Body,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(Dimens.Small)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(Dimens.XLarge))
-
-            // 내일 할 일
-            Text(
-                text = "내일 할 일",
-                style = AppTextStyle.BodyTitle,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium)
-                    .heightIn(60.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.surface,
-                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.surfaceContainer,
-                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
-                    )
-            ) {
-                Text(
-                    text = tomorrow,
-                    style = AppTextStyle.Body,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(Dimens.Small)
-                )
-            }
         }
     }
 }
