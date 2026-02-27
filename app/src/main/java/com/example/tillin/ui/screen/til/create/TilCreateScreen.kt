@@ -102,14 +102,7 @@ fun TilCreateScreen(
                                 )
                                 viewModel.saveTil(
                                     onSuccess = { onDone() },
-                                    til = finalTil,
-                                    onError = { error ->
-                                        Toast.makeText(
-                                            context,
-                                            "오류 발생. 잠시 후 다시 시도해 주세요.",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                    }
+                                    til = finalTil
                                 )
                             }
                         ) {
@@ -125,58 +118,72 @@ fun TilCreateScreen(
 
         }
     ) { padding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .verticalScroll(scrollState)
-                .background(color = MaterialTheme.colorScheme.surfaceBright)
         ) {
-            TextField(
-                value = title,
-                onValueChange = { title = it },
-                placeholder = { Text("제목", style = AppTextStyle.TitleSmall.copy(color = Gray)) },
-                textStyle = AppTextStyle.TitleSmall,
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimens.Tiny),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
+                    .fillMaxSize()
+                    .padding(padding)
+                    .verticalScroll(scrollState)
+                    .background(color = MaterialTheme.colorScheme.surfaceBright)
+            ) {
+                TextField(
+                    value = title,
+                    onValueChange = { title = it },
+                    placeholder = {
+                        Text(
+                            "제목",
+                            style = AppTextStyle.TitleSmall.copy(color = Gray)
+                        )
+                    },
+                    textStyle = AppTextStyle.TitleSmall,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Dimens.Tiny),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
 
-                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface
+                    )
                 )
-            )
 
-            HorizontalDivider(
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.surfaceContainer
-            )
+                HorizontalDivider(
+                    thickness = 1.dp,
+                    color = MaterialTheme.colorScheme.surfaceContainer
+                )
 
-            Spacer(modifier = Modifier.height(Dimens.Small))
+                Spacer(modifier = Modifier.height(Dimens.Small))
 
-            //배운 것
-            TilCreateItem(title = "배운 것", value = learned, onValueChange = { learned = it })
-            TilCreateItem(title = "어려운 점", value = difficulty, onValueChange = { difficulty = it })
-            TilCreateItem(title = "내일 할 일", value = tomorrow, onValueChange = { tomorrow = it })
+                //배운 것
+                TilCreateItem(title = "배운 것", value = learned, onValueChange = { learned = it })
+                TilCreateItem(
+                    title = "어려운 점",
+                    value = difficulty,
+                    onValueChange = { difficulty = it })
+                TilCreateItem(title = "내일 할 일", value = tomorrow, onValueChange = { tomorrow = it })
 
 
-            if (state.isLoading) {
-                Surface(
-                    color = Black.copy(alpha = 0.3f),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                            Spacer(modifier = Modifier.height(Dimens.Small))
-                            Text(
-                                text = "TIL 분석 중...",
-                                style = AppTextStyle.Body.copy(color = White)
-                            )
+                if (state.isLoading) {
+                    Surface(
+                        color = Black.copy(alpha = 0.3f),
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                                Spacer(modifier = Modifier.height(Dimens.Small))
+                                Text(
+                                    text = "TIL 분석 중...",
+                                    style = AppTextStyle.Body.copy(color = White)
+                                )
+                            }
                         }
                     }
                 }
