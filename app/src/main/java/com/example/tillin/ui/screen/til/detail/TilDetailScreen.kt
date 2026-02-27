@@ -108,12 +108,48 @@ fun TilDetailScreen(
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.surfaceContainer)
             Spacer(modifier = Modifier.height(Dimens.Small))
 
-            TilDetailItem(
-                title = "AI 요약",
-                content = comment,
-                containerColor = MaterialTheme.colorScheme.background,
-                borderColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+            // AI 요약
+            Row {
+                Text(
+                    text = "AI 요약",
+                    style = AppTextStyle.BodyTitle,
+                    modifier = Modifier.padding(
+                        start = Dimens.XLarge,
+                        end = Dimens.Small,
+                        top = Dimens.Nano,
+                        bottom = Dimens.Nano
+                    )
+                )
+                EmotionTag(emotion)
+                Spacer(modifier = Modifier.width(Dimens.Tiny))
+                DifficultyTag(difficultyLevel)
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.Medium)
+                    .heightIn(60.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.background,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        shape = RoundedCornerShape(Dimens.DefaultCornerRadius)
+                    )
+            ) {
+                Text(
+                    text = comment,
+                    style = AppTextStyle.Body,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(Dimens.Small)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(Dimens.XLarge))
+
             TilDetailItem("배운 것", learned)
             TilDetailItem("어려운 점", difficulty)
             TilDetailItem("내일 할 일", tomorrow)
