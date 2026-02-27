@@ -21,6 +21,17 @@ class TilCreateViewModel @Inject constructor(
     private val _state = MutableStateFlow(TilCreateState())
     val state = _state.asStateFlow()
 
+    private fun emotionToScore(emotion: String?): Int {
+        return when (emotion) {
+            "성취감" -> 5
+            "만족" -> 4
+            "평범" -> 3
+            "어려움" -> 2
+            "좌절" -> 1
+            else -> 0
+        }
+    }
+
     fun saveTil(
         til: TilEntity,
         onSuccess: () -> Unit = {},
@@ -29,7 +40,10 @@ class TilCreateViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
-                if (til.id == 0L) {
+                val verifiedTil = til.copy(
+                    emotionScore = emotionToScore(til.emotion)
+                )
+                if (verifiedTil.id == 0L) {
                     tilRepository.insertTil(til)
                 } else {
                     tilRepository.updateTil(til)
