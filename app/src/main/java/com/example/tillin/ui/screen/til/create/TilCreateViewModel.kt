@@ -40,13 +40,13 @@ class TilCreateViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _state.value = _state.value.copy(isLoading = true, error = null, success = false)
             try {
-                val verifiedTil = til.copy(
+                val finalTil = til.copy(
                     emotionScore = emotionToScore(til.emotion)
                 )
-                if (verifiedTil.id == 0L) {
-                    tilRepository.insertTil(til)
+                if (finalTil.id == 0L) {
+                    tilRepository.insertTil(finalTil)
                 } else {
-                    tilRepository.updateTil(til)
+                    tilRepository.updateTil(finalTil)
                 }
 
                 withContext(Dispatchers.Main) {

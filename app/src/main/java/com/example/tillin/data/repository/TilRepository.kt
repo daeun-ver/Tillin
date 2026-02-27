@@ -17,8 +17,18 @@ class TilRepository @Inject constructor(
 
     suspend fun insertTil(til: TilEntity) {
         val analyzedTil = analyzeTil(apiService, til)
+        val finalTil = analyzedTil.copy(
+            emotionScore = when(analyzedTil.emotion?.trim()) {
+                "성취감" -> 5
+                "만족" -> 4
+                "평범" -> 3
+                "어려움" -> 2
+                "좌절" -> 1
+                else -> 0
+            }
+        )
 
-        tilDao.insertTil(analyzedTil)
+        tilDao.insertTil(finalTil)
 
         statsRepository.updateWeeklyStats(til.createdAt)
         statsRepository.updateMonthlyStats(til.createdAt)
