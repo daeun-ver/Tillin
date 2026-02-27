@@ -43,6 +43,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tillin.data.local.entity.TilEntity
+import com.example.tillin.ui.screen.til.component.TilCreateItem
 import com.example.tillin.ui.theme.AppTextStyle
 import com.example.tillin.ui.theme.Black
 import com.example.tillin.ui.theme.Dimens
@@ -103,7 +104,11 @@ fun TilCreateScreen(
                                     onSuccess = { onDone() },
                                     til = finalTil,
                                     onError = { error ->
-                                        Toast.makeText(context, "오류 발생. 잠시 후 다시 시도해 주세요.", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(
+                                            context,
+                                            "오류 발생. 잠시 후 다시 시도해 주세요.",
+                                            Toast.LENGTH_LONG
+                                        ).show()
                                     }
                                 )
                             }
@@ -154,110 +159,25 @@ fun TilCreateScreen(
             Spacer(modifier = Modifier.height(Dimens.Small))
 
             //배운 것
-            Text(
-                text = "배운 것",
-                style = AppTextStyle.BodyTitle,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
-            )
-            OutlinedTextField(
-                value = learned,
-                onValueChange = { learned = it },
-                minLines = 4,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium),
-                shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
-                textStyle = AppTextStyle.Body,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.surface,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                    focusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
+            TilCreateItem(title = "배운 것", value = learned, onValueChange = { learned = it })
+            TilCreateItem(title = "어려운 점", value = difficulty, onValueChange = { difficulty = it })
+            TilCreateItem(title = "내일 할 일", value = tomorrow, onValueChange = { tomorrow = it })
 
-                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
-                )
-            )
 
-            Spacer(modifier = Modifier.height(Dimens.XLarge))
-
-            //어려운 점
-            Text(
-                text = "어려운 점",
-                style = AppTextStyle.BodyTitle,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
-            )
-            OutlinedTextField(
-                value = difficulty,
-                onValueChange = { difficulty = it },
-                minLines = 4,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium),
-                shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
-                textStyle = AppTextStyle.Body,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.surface,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                    focusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
-
-                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
-                )
-            )
-
-            Spacer(modifier = Modifier.height(Dimens.XLarge))
-
-            //내일 할 일
-            Text(
-                text = "내일 할 일",
-                style = AppTextStyle.BodyTitle,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.XLarge, vertical = Dimens.Nano)
-            )
-            OutlinedTextField(
-                value = tomorrow,
-                onValueChange = { tomorrow = it },
-                minLines = 4,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.Medium),
-                shape = RoundedCornerShape(Dimens.DefaultCornerRadius),
-                textStyle = AppTextStyle.Body,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.surface,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                    focusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceContainer,
-
-                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
-                )
-            )
-        }
-
-        if (state.isLoading) {
-            Surface(
-                color = Black.copy(alpha = 0.3f),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                        Spacer(modifier = Modifier.height(Dimens.Small))
-                        Text(
-                            text = "TIL 분석 중...",
-                            style = AppTextStyle.Body.copy(color = White)
-                        )
+            if (state.isLoading) {
+                Surface(
+                    color = Black.copy(alpha = 0.3f),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                            Spacer(modifier = Modifier.height(Dimens.Small))
+                            Text(
+                                text = "TIL 분석 중...",
+                                style = AppTextStyle.Body.copy(color = White)
+                            )
+                        }
                     }
                 }
             }
