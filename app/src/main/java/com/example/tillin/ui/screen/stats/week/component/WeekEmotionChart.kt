@@ -27,22 +27,17 @@ import com.patrykandpatrick.vico.compose.component.lineComponent
 import com.patrykandpatrick.vico.core.axis.AxisItemPlacer
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.core.entry.entryOf
+import kotlin.math.roundToInt
 
 @Composable
 fun WeekEmotionChart(
     til: List<TilEntity>,
     modifier: Modifier = Modifier
 ) {
-    val sorted = til.sortedBy { it.createdAt }
-    val weekMap = mutableMapOf<Int, Float>()
-
-    sorted.forEach { item ->
-        val date = item.createdAt
-
-        val dayIndex = date.dayOfWeek.value % 7
-
-        weekMap[dayIndex] = item.emotionScore?.toFloat() ?: 0f
-    }
+    val weekMap = til.groupBy { it.createdAt.dayOfWeek.value % 7 }
+        .mapValues { (_, items) ->
+            items.mapNotNull { it.emotionScore }.average().toFloat()
+        }
 
     val entries = (0..6).map { index ->
         val score = weekMap[index] ?: 0f
@@ -89,7 +84,7 @@ fun WeekEmotionChart(
                         thickness = 1.dp
                     ),
                     valueFormatter = { value, _ ->
-                        when (value.toInt()) {
+                        when (value.roundToInt()) {
                             1 -> "😭"
                             2 -> "😓"
                             3 -> "😐"
